@@ -1,1 +1,1 @@
-This project is about elective courses system.
+This project is about elective courses system
