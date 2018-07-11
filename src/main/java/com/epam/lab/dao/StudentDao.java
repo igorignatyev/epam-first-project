@@ -18,5 +18,5 @@ public interface StudentDao extends GenericDao<Student> {
     void update(int id, Student student);
 
     @Override
-    void delete(Student student);
+    void delete(int id);
 }

@@ -4,7 +4,9 @@ import com.epam.lab.entity.Student;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import sun.awt.image.ImageWatched;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -61,4 +63,12 @@ public class StudentDaoImplTest {
         Assert.assertThat(actualList, is(expectedList));
     }
 
+    @Test
+    public void delete() {
+        studentDao.delete(1);
+
+        List<Student> actualList = studentDao.findAll();
+
+        Assert.assertThat(actualList.isEmpty(), is(true));
+    }
 }
