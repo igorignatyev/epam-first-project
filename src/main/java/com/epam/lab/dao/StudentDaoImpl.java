@@ -148,7 +148,21 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public void delete(Student student) {
+    public void delete(int id) {
+        try {
+            String query = "DELETE FROM STUDENTS WHERE id=?";
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
 
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (preparedStatement != null) try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
