@@ -61,7 +61,9 @@ public class StudentDaoImpl implements StudentDao {
         Student student = null;
 
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM STUDENTS WHERE id=?");
+            String query = "SELECT * FROM STUDENTS WHERE id=?";
+
+            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
 
             rs = preparedStatement.executeQuery();
@@ -93,17 +95,39 @@ public class StudentDaoImpl implements StudentDao {
     }
 
     @Override
-    public void create(Student obj) {
+    public void create(Student student) {
+        int id = student.getId();
+        String firstName = student.getFirstName();
+        String lastName = student.getLastName();
+
+        try {
+            String query = "INSERT INTO STUDENTS (id, first_name, last_name) VALUES (?,?,?)";
+            preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, firstName);
+            preparedStatement.setString(3, lastName);
+
+            preparedStatement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (preparedStatement != null) try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void update(Student student) {
 
     }
 
     @Override
-    public void update(Student obj) {
-
-    }
-
-    @Override
-    public void delete(Student obj) {
+    public void delete(Student student) {
 
     }
 }
