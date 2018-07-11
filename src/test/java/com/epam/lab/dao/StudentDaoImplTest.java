@@ -22,11 +22,20 @@ public class StudentDaoImplTest {
 
     @Test
     public void findAll() throws Exception {
-        List<Student> studentList = studentDao.findAll();
+        List<Student> actualList = studentDao.findAll();
 
-        List<Student> testStudentList = Collections.singletonList(new Student(1, "Andrew", "Ivanov"));
+        List<Student> expectedList = Collections.singletonList(new Student(1, "Andrew", "Ivanov"));
 
-        Assert.assertThat(studentList, is(testStudentList));
+        Assert.assertThat(actualList, is(expectedList));
+    }
+
+    @Test
+    public void find() {
+        Student actualStudent = studentDao.find(1);
+
+        Student expectedStudent = new Student(1, "Andrew", "Ivanov");
+
+        Assert.assertThat(actualStudent, is(expectedStudent));
     }
 
 }

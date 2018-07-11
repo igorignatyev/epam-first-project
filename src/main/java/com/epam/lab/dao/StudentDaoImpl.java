@@ -3,23 +3,21 @@ package com.epam.lab.dao;
 import com.epam.lab.config.DatabaseConfig;
 import com.epam.lab.entity.Student;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class StudentDaoImpl implements StudentDao {
-    Connection conn = DatabaseConfig.getDBConnection();
-    Statement stmt = null;
+    Connection connection = DatabaseConfig.getDBConnection();
+    Statement statement = null;
+    PreparedStatement preparedStatement = null;
     ResultSet rs = null;
 
     {
         try {
-            conn.setAutoCommit(false);
-            stmt = conn.createStatement();
+            connection.setAutoCommit(false);
+            statement = connection.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -31,7 +29,7 @@ public class StudentDaoImpl implements StudentDao {
         List<Student> studentList = new ArrayList<>();
 
         try {
-            rs = stmt.executeQuery("SELECT * FROM STUDENTS");
+            rs = statement.executeQuery("SELECT * FROM STUDENTS");
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String firstName = rs.getString("first_name");
@@ -41,6 +39,18 @@ public class StudentDaoImpl implements StudentDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            if (rs != null) try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            if (preparedStatement != null) try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return studentList;
@@ -48,7 +58,38 @@ public class StudentDaoImpl implements StudentDao {
 
     @Override
     public Student find(int id) {
-        return null;
+        Student student = null;
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM STUDENTS WHERE id=?");
+            preparedStatement.setInt(1, id);
+
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                String firstName = rs.getString("first_name");
+                String lastName = rs.getString("last_name");
+
+                student = new Student(id, firstName, lastName);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (rs != null) try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            if (preparedStatement != null) try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return student;
     }
 
     @Override
@@ -64,27 +105,5 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public void delete(Student obj) {
 
-    }
-
-    public static void main(String[] args) {
-        Connection conn = DatabaseConfig.getDBConnection();
-        Statement stmt = null;
-        ResultSet rs = null;
-
-        try {
-            conn.setAutoCommit(false);
-            stmt = conn.createStatement();
-
-            rs = stmt.executeQuery("SELECT * FROM COURSES");
-            while (rs.next()) {
-                System.out.println("Id: " + rs.getInt("id") + " Name: " + rs.getString("name") + " Description: " + rs.getString("description") + " Teacher_id: " + rs.getString("teacher_id"));
-            }
-
-            rs.close();
-            stmt.close();
-            conn.commit();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
