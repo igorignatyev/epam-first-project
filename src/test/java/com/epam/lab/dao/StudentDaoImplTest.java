@@ -38,4 +38,16 @@ public class StudentDaoImplTest {
         Assert.assertThat(actualStudent, is(expectedStudent));
     }
 
+    @Test
+    public void create() {
+        Student student = new Student(2, "Bob", "Black");
+        studentDao.create(student);
+
+        List<Student> actualList = studentDao.findAll();
+        List<Student> expectedList = Arrays.asList(new Student(1, "Andrew", "Ivanov"),
+                new Student(2, "Bob", "Black"));
+
+        Assert.assertThat(actualList, is(expectedList));
+    }
+
 }
