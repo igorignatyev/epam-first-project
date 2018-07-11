@@ -47,16 +47,17 @@ public class Student {
 
         Student student = (Student) o;
 
-        if (id != student.id) return false;
-        if (firstName != null ? !firstName.equals(student.firstName) : student.firstName != null) return false;
-        return lastName != null ? lastName.equals(student.lastName) : student.lastName == null;
+        if (getId() != student.getId()) return false;
+        if (getFirstName() != null ? !getFirstName().equals(student.getFirstName()) : student.getFirstName() != null)
+            return false;
+        return getLastName() != null ? getLastName().equals(student.getLastName()) : student.getLastName() == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
-        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        int result = getId();
+        result = 31 * result + (getFirstName() != null ? getFirstName().hashCode() : 0);
+        result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
         return result;
     }
 

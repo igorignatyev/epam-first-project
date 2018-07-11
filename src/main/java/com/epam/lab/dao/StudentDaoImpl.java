@@ -1,6 +1,6 @@
 package com.epam.lab.dao;
 
-import com.epam.lab.config.DatabaseConfig;
+
 import com.epam.lab.entity.Student;
 
 import java.sql.*;
@@ -9,9 +9,8 @@ import java.util.List;
 
 
 public class StudentDaoImpl implements StudentDao {
-    Connection connection = DatabaseConfig.getDBConnection();
-    Statement statement = null;
-    PreparedStatement preparedStatement = null;
+    private Statement statement = null;
+    private PreparedStatement preparedStatement = null;
     ResultSet rs = null;
 
     {
