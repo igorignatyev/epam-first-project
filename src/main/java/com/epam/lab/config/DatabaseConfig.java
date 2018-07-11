@@ -1,4 +1,4 @@
-package config;
+package com.epam.lab.config;
 
 import java.sql.*;
 
