@@ -121,9 +121,30 @@ public class StudentDaoImpl implements StudentDao {
         }
     }
 
-    @Override
-    public void update(Student student) {
 
+    @Override
+    public void update(int id, Student student) {
+        String firstName = student.getFirstName();
+        String lastName = student.getLastName();
+
+        try {
+            String query = "UPDATE STUDENTS SET first_name=?, last_name=? WHERE id=?";
+            preparedStatement = connection.prepareStatement(query);
+
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setInt(3, id);
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (preparedStatement != null) try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
