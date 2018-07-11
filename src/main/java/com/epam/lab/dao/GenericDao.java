@@ -19,4 +19,3 @@ public interface GenericDao<T> {
 
     void delete(int id);
 }
-
