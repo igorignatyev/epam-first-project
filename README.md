@@ -1,0 +1,1 @@
+![db-scheme](/uploads/1e528f9229557374849189af6d27ca24/db-scheme.png)
