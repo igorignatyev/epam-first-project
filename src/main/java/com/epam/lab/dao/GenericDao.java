@@ -9,7 +9,7 @@ public interface GenericDao<T> {
 
     void create(T obj);
 
-    void update(T obj);
+    void update(int id, T obj);
 
     void delete(T obj);
 }

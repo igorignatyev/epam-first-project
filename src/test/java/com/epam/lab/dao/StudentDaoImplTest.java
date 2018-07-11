@@ -50,4 +50,15 @@ public class StudentDaoImplTest {
         Assert.assertThat(actualList, is(expectedList));
     }
 
+    @Test
+    public void update() {
+        studentDao.update(1, new Student("Max", "Ivanov"));
+
+        List<Student> actualList = studentDao.findAll();
+
+        List<Student> expectedList = Collections.singletonList(new Student(1, "Max", "Ivanov"));
+
+        Assert.assertThat(actualList, is(expectedList));
+    }
+
 }

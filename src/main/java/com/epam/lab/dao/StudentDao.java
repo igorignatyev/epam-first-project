@@ -12,11 +12,11 @@ public interface StudentDao extends GenericDao<Student> {
     Student find(int id);
 
     @Override
-    void create(Student obj);
+    void create(Student student);
 
     @Override
-    void update(Student obj);
+    void update(int id, Student student);
 
     @Override
-    void delete(Student obj);
+    void delete(Student student);
 }
