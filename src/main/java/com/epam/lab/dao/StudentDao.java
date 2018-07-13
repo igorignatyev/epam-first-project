@@ -1,14 +1,10 @@
 package com.epam.lab.dao;
 
-import com.epam.lab.config.DatabaseConfig;
 import com.epam.lab.entity.Student;
 
-import java.sql.Connection;
 import java.util.List;
 
 public interface StudentDao extends GenericDao<Student> {
-
-
     @Override
     List<Student> findAll();
 
