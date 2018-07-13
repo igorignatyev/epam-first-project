@@ -23,7 +23,7 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public List<Student> findAll() {
         List<Student> studentList = new ArrayList<>();
-        String query = "SELECT * FROM STUDENTS";
+        String query = "SELECT id, first_name, last_name FROM STUDENTS";
 
         try (ResultSet rs = statement.executeQuery(query)) {
             while (rs.next()) {
@@ -43,7 +43,7 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public Student find(int id) {
         Student student = null;
-        String query = "SELECT * FROM STUDENTS WHERE id=?";
+        String query = "SELECT id, first_name, last_name FROM STUDENTS WHERE id=?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, id);

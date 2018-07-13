@@ -22,7 +22,7 @@ public class TeacherDaoImpl implements TeacherDao {
 
     public List<Teacher> findAll() {
         List<Teacher> teacherList = new ArrayList<>();
-        String query = "SELECT * FROM TEACHERS";
+        String query = "SELECT id, first_name, last_name FROM TEACHERS";
         try (ResultSet rs = statement.executeQuery(query)) {
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -39,7 +39,7 @@ public class TeacherDaoImpl implements TeacherDao {
 
     public Teacher find(int id) {
         Teacher teacher = null;
-        String query = "SELECT * FROM TEACHERS WHERE id=?";
+        String query = "SELECT id, first_name, last_name FROM TEACHERS WHERE id=?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, id);
             try (ResultSet rs = preparedStatement.executeQuery()) {
