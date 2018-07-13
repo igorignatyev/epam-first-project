@@ -1,19 +1,17 @@
 package com.epam.lab.dao;
 
-
+import com.epam.lab.config.DatabaseConfig;
 import com.epam.lab.entity.Student;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class StudentDaoImpl implements StudentDao {
+    private final Connection connection = DatabaseConfig.getDBConnection();
     private Statement statement = null;
-    private PreparedStatement preparedStatement = null;
-    ResultSet rs = null;
 
-    {
+    public StudentDaoImpl() {
         try {
             connection.setAutoCommit(false);
             statement = connection.createStatement();
@@ -22,13 +20,12 @@ public class StudentDaoImpl implements StudentDao {
         }
     }
 
-
     @Override
     public List<Student> findAll() {
         List<Student> studentList = new ArrayList<>();
+        String query = "SELECT * FROM STUDENTS";
 
-        try {
-            rs = statement.executeQuery("SELECT * FROM STUDENTS");
+        try (ResultSet rs = statement.executeQuery(query)) {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String firstName = rs.getString("first_name");
@@ -38,18 +35,6 @@ public class StudentDaoImpl implements StudentDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (rs != null) try {
-                rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            if (preparedStatement != null) try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
 
         return studentList;
@@ -58,36 +43,20 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public Student find(int id) {
         Student student = null;
+        String query = "SELECT * FROM STUDENTS WHERE id=?";
 
-        try {
-            String query = "SELECT * FROM STUDENTS WHERE id=?";
-
-            preparedStatement = connection.prepareStatement(query);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, id);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    String firstName = rs.getString("first_name");
+                    String lastName = rs.getString("last_name");
 
-            rs = preparedStatement.executeQuery();
-
-            while (rs.next()) {
-                String firstName = rs.getString("first_name");
-                String lastName = rs.getString("last_name");
-
-                student = new Student(id, firstName, lastName);
+                    student = new Student(id, firstName, lastName);
+                }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (rs != null) try {
-                rs.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            if (preparedStatement != null) try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
 
         return student;
@@ -99,37 +68,27 @@ public class StudentDaoImpl implements StudentDao {
         String firstName = student.getFirstName();
         String lastName = student.getLastName();
 
-        try {
-            String query = "INSERT INTO STUDENTS (id, first_name, last_name) VALUES (?,?,?)";
-            preparedStatement = connection.prepareStatement(query);
+        String query = "INSERT INTO STUDENTS (id, first_name, last_name) VALUES (?,?,?)";
 
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, id);
             preparedStatement.setString(2, firstName);
             preparedStatement.setString(3, lastName);
 
             preparedStatement.execute();
-
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (preparedStatement != null) try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
-
 
     @Override
     public void update(int id, Student student) {
         String firstName = student.getFirstName();
         String lastName = student.getLastName();
 
-        try {
-            String query = "UPDATE STUDENTS SET first_name=?, last_name=? WHERE id=?";
-            preparedStatement = connection.prepareStatement(query);
+        String query = "UPDATE STUDENTS SET first_name=?, last_name=? WHERE id=?";
 
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, firstName);
             preparedStatement.setString(2, lastName);
             preparedStatement.setInt(3, id);
@@ -137,31 +96,19 @@ public class StudentDaoImpl implements StudentDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (preparedStatement != null) try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
     @Override
     public void delete(int id) {
-        try {
-            String query = "DELETE FROM STUDENTS WHERE id=?";
-            preparedStatement = connection.prepareStatement(query);
+        String query = "DELETE FROM STUDENTS WHERE id=?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, id);
 
             preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            if (preparedStatement != null) try {
-                preparedStatement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 }
