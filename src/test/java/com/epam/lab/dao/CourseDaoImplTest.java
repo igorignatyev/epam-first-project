@@ -1,20 +1,22 @@
 package com.epam.lab.dao;
 
 import com.epam.lab.entity.Course;
-import org.junit.Assert;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.jupiter.api.Assertions.*;
+import static junit.framework.Assert.assertEquals;
 
 class CourseDaoImplTest {
 
-    private GenericDao<Course> courseDao = new CourseDaoImpl();
+    private GenericDao<Course> courseDao;
+
+    @BeforeEach
+    void setUp() {
+        courseDao = new CourseDaoImpl();
+    }
 
     @Test
     void findAll() throws Exception{

@@ -3,7 +3,11 @@ package com.epam.lab.dao;
 import com.epam.lab.config.DatabaseConfig;
 import com.epam.lab.entity.Course;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +19,7 @@ public class CourseDaoImpl implements CourseDao {
         try {
             connection.setAutoCommit(false);
             statement = connection.createStatement();
-        } catch (SQLException e) {
+        } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -62,7 +66,7 @@ public class CourseDaoImpl implements CourseDao {
                 }
             }
 
-        } catch (SQLException e) {
+        } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
         }
 
@@ -86,7 +90,7 @@ public class CourseDaoImpl implements CourseDao {
 
             preparedStatement.execute();
 
-        } catch (SQLException e) {
+        } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -106,7 +110,7 @@ public class CourseDaoImpl implements CourseDao {
             preparedStatement.setInt(4, id);
 
             preparedStatement.execute();
-        } catch (SQLException e) {
+        } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -118,7 +122,7 @@ public class CourseDaoImpl implements CourseDao {
             preparedStatement.setInt(1, id);
 
             preparedStatement.execute();
-        } catch (SQLException e) {
+        } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
         }
     }
