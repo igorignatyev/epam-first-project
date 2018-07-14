@@ -12,17 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CourseDaoImpl implements CourseDao {
-    private final Connection connection = DatabaseConfig.getDBConnection();
+    private Connection connection;
     private Statement statement = null;
 
-    {
+    public CourseDaoImpl() {
         try {
-            connection.setAutoCommit(false);
+            connection = DatabaseConfig.getDBConnection();
             statement = connection.createStatement();
         } catch (SQLException | NullPointerException e) {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public List<Course> findAll() {
