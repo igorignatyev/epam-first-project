@@ -26,11 +26,10 @@ public class DatabaseConfig {
         Statement stmt = null;
         ResultSet rs = null;
         try {
-//            connection.setAutoCommit(false);
+            connection.setAutoCommit(false);
             stmt = connection.createStatement();
             stmt.execute("CREATE TABLE COURSES(id INT PRIMARY KEY, name VARCHAR(255), description VARCHAR(255), teacher_id INT)");
             stmt.execute("INSERT INTO COURSES(id, name, description, teacher_id) VALUES(1, 'Java', 'This is Java course', 1)");
-            stmt.execute("INSERT INTO COURSES(id, name, description, teacher_id) VALUES(2, 'C', 'This is C course', 2)");
 
             stmt.execute("CREATE TABLE PARTICIPATIONS(id INT PRIMARY KEY, student_id INT, course_id INT)");
 
@@ -38,11 +37,9 @@ public class DatabaseConfig {
 
             stmt.execute("CREATE TABLE STUDENTS(id INT PRIMARY KEY, first_name VARCHAR(255), last_name VARCHAR(255))");
             stmt.execute("INSERT INTO STUDENTS(id, first_name, last_name) VALUES (1, 'Andrew', 'Ivanov')");
-            stmt.execute("INSERT INTO STUDENTS(id, first_name, last_name) VALUES (2, 'Max', 'White')");
 
             stmt.execute("CREATE TABLE TEACHERS(id INT PRIMARY KEY, first_name VARCHAR(255), last_name VARCHAR(255))");
             stmt.execute("INSERT INTO TEACHERS(id, first_name, last_name) VALUES (1, 'Roman', 'Fyodorov')");
-            stmt.execute("INSERT INTO TEACHERS(id, first_name, last_name) VALUES (2, 'Alex', 'White')");
 
 
             stmt.close();

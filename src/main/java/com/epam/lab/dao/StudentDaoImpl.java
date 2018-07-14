@@ -3,16 +3,23 @@ package com.epam.lab.dao;
 import com.epam.lab.config.DatabaseConfig;
 import com.epam.lab.entity.Student;
 
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class StudentDaoImpl implements StudentDao {
-    private final Connection connection = DatabaseConfig.getDBConnection();
+    private Connection connection;
     private Statement statement = null;
 
     public StudentDaoImpl() {
         try {
+            connection = DatabaseConfig.getDBConnection();
             statement = connection.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -111,4 +118,3 @@ public class StudentDaoImpl implements StudentDao {
         }
     }
 }
-
