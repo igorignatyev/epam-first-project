@@ -13,7 +13,6 @@ public class StudentDaoImpl implements StudentDao {
 
     public StudentDaoImpl() {
         try {
-            connection.setAutoCommit(false);
             statement = connection.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -112,3 +111,4 @@ public class StudentDaoImpl implements StudentDao {
         }
     }
 }
+
