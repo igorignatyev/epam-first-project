@@ -1,23 +1,21 @@
 package com.epam.lab.dao;
 
 import com.epam.lab.entity.Student;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import sun.awt.image.ImageWatched;
 
-import java.util.ArrayList;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
+
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class StudentDaoImplTest {
-    private StudentDao studentDao;
+    private GenericDao<Student> studentDao;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         studentDao = new StudentDaoImpl();
     }
@@ -26,9 +24,9 @@ public class StudentDaoImplTest {
     public void findAll() throws Exception {
         List<Student> actualList = studentDao.findAll();
 
-        List<Student> expectedList = Collections.singletonList(new Student(1, "Andrew", "Ivanov"));
+        List<Student> expectedList = Arrays.asList(new Student(1, "Andrew", "Ivanov"), new Student(2, "Ivan", "Markov"));
 
-        Assert.assertThat(actualList, is(expectedList));
+        assertEquals(actualList, expectedList);
     }
 
     @Test
@@ -37,38 +35,40 @@ public class StudentDaoImplTest {
 
         Student expectedStudent = new Student(1, "Andrew", "Ivanov");
 
-        Assert.assertThat(actualStudent, is(expectedStudent));
+        assertEquals(actualStudent, expectedStudent);
     }
 
     @Test
     public void create() {
-        Student student = new Student(2, "Bob", "Black");
+        Student student = new Student(3, "Bob", "Black");
         studentDao.create(student);
 
         List<Student> actualList = studentDao.findAll();
-        List<Student> expectedList = Arrays.asList(new Student(1, "Andrew", "Ivanov"),
-                new Student(2, "Bob", "Black"));
+        List<Student> expectedList = Arrays.asList(new Student(1, "Andrew", "Ivanov"), new Student(2, "Ivan", "Markov"),
+                new Student(3, "Bob", "Black"));
 
-        Assert.assertThat(actualList, is(expectedList));
+        assertEquals(actualList, expectedList);
     }
 
     @Test
     public void update() {
-        studentDao.update(1, new Student("Max", "Ivanov"));
+        studentDao.update(2, new Student("Max", "Ivanov"));
 
         List<Student> actualList = studentDao.findAll();
 
-        List<Student> expectedList = Collections.singletonList(new Student(1, "Max", "Ivanov"));
+        List<Student> expectedList = Arrays.asList(new Student(1, "Andrew", "Ivanov"), new Student(2, "Max", "Ivanov"));
 
-        Assert.assertThat(actualList, is(expectedList));
+        assertEquals(actualList, expectedList);
     }
 
     @Test
     public void delete() {
         studentDao.delete(1);
 
-        List<Student> actualList = studentDao.findAll();
+        List<Student> actualList2 = studentDao.findAll();
 
-        Assert.assertThat(actualList.isEmpty(), is(true));
+        System.out.println("DELETE AFTER" + actualList2);
+
+        assertEquals(actualList2.size() == 1, true);
     }
 }

@@ -37,7 +37,6 @@ public class DatabaseConfig {
 
             stmt.execute("CREATE TABLE STUDENTS(id INT PRIMARY KEY, first_name VARCHAR(255), last_name VARCHAR(255))");
             stmt.execute("INSERT INTO STUDENTS(id, first_name, last_name) VALUES (1, 'Andrew', 'Ivanov')");
-            stmt.execute("INSERT INTO STUDENTS(id, first_name, last_name) VALUES (2, 'Max', 'White')");
 
             stmt.execute("CREATE TABLE TEACHERS(id INT PRIMARY KEY, first_name VARCHAR(255), last_name VARCHAR(255))");
             stmt.execute("INSERT INTO TEACHERS(id, first_name, last_name) VALUES (1, 'Roman', 'Fyodorov')");
