@@ -35,13 +35,12 @@ public class DatabaseConfig {
 
             stmt.execute("CREATE TABLE REVIEWS(id INT PRIMARY KEY, feedback VARCHAR(255), mark INT, participation_id INT)");
 
-            stmt.execute("CREATE TABLE STUDENTS(id INT PRIMARY KEY, first_name VARCHAR(255), last_name VARCHAR(255))");
-            stmt.execute("INSERT INTO STUDENTS(id, first_name, last_name) VALUES (1, 'Andrew', 'Ivanov')");
-            stmt.execute("INSERT INTO STUDENTS(id, first_name, last_name) VALUES (2, 'Max', 'White')");
+            stmt.execute("CREATE TABLE STUDENTS(id INT PRIMARY KEY, first_name VARCHAR(255), last_name VARCHAR(255), email VARCHAR(255), password VARCHAR(255))");
+            stmt.execute("INSERT INTO STUDENTS(id, first_name, last_name, email, password) VALUES (1, 'Andrew', 'Ivanov', 'ivanov@email.com', '11111')");
+            stmt.execute("INSERT INTO STUDENTS(id, first_name, last_name, email, password) VALUES (2, 'Max', 'White', 'white@email.com', '22222')");
 
-            stmt.execute("CREATE TABLE TEACHERS(id INT PRIMARY KEY, first_name VARCHAR(255), last_name VARCHAR(255))");
-            stmt.execute("INSERT INTO TEACHERS(id, first_name, last_name) VALUES (1, 'Roman', 'Fyodorov')");
-
+            stmt.execute("CREATE TABLE TEACHERS(id INT PRIMARY KEY, first_name VARCHAR(255), last_name VARCHAR(255), email VARCHAR(255), password VARCHAR(255))");
+            stmt.execute("INSERT INTO TEACHERS(id, first_name, last_name, email, password) VALUES (1, 'Roman', 'Fyodorov', 'fyodorov@email.com', '33333')");
 
             stmt.close();
             connection.commit();

@@ -62,6 +62,41 @@ public class StudentDaoImpl implements StudentDao {
         return student;
     }
 
+    public Student findByEmail(String email) {
+        Student teacher = null;
+        String query = "SELECT id, first_name, last_name FROM STUDENTS WHERE email=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String firstName = rs.getString("first_name");
+                    String lastName = rs.getString("last_name");
+                    teacher = new Student(id, firstName, lastName);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return teacher;
+    }
+
+    public boolean verifyPassword(String email, String password) {
+        String thisPassword = null;
+        String query = "SELECT password FROM STUDENTS WHERE email=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    thisPassword = rs.getString("password");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return password.equals(thisPassword);
+    }
+
     @Override
     public void create(Student student) {
         int id = student.getId();

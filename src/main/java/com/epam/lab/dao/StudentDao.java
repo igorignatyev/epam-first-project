@@ -19,4 +19,8 @@ public interface StudentDao extends GenericDao<Student> {
 
     @Override
     void delete(int id);
+
+    public Student findByEmail(String email);
+
+    public boolean verifyPassword(String email, String password);
 }
