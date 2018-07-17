@@ -14,7 +14,6 @@ public class TeacherDaoImpl implements TeacherDao {
     public TeacherDaoImpl(){
         try {
             connection = DatabaseConfig.getDBConnection();
-            connection.setAutoCommit(false);
             statement = connection.createStatement();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -26,7 +26,7 @@ public class OneTeacherServlet extends HttpServlet {
         req.setAttribute("firstName", firstName);
         req.setAttribute("lastName", lastName);
 
-        req.getRequestDispatcher("/teacher.jsp").forward(req, resp);
+        req.getRequestDispatcher("/one_teacher.jsp").forward(req, resp);
     }
 
     @Override
