@@ -33,13 +33,21 @@ public class AllCoursesServlet extends HttpServlet {
         String action = req.getParameter("action");
 
         if ("addCourse".equals(action)) {
+            int newId;
             try {
-                int id = Integer.parseInt(req.getParameter("id"));
+                List<Course> courseList = courseDao.findAll();
+                if (courseList.isEmpty()) {
+                    newId = 1;
+                } else {
+                    Course lastCouse = courseList.get(courseList.size() - 1);
+                    newId = lastCouse.getId() + 1;
+                }
+
                 String name = req.getParameter("name");
                 String description = req.getParameter("description");
                 int teacherId = Integer.parseInt(req.getParameter("teacherId"));
 
-                courseDao.create(new Course(id, name, description, teacherId));
+                courseDao.create(new Course(newId, name, description, teacherId));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
