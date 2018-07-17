@@ -127,4 +127,64 @@ public class CourseDaoImpl implements CourseDao {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public List<Course> findAvailable(int studentId) {
+        List<Course> courseList = new ArrayList<>();
+
+        String query = "SELECT COURSES.id, COURSES.name, COURSES.description, COURSES.teacher_id " +
+                "FROM COURSES " +
+                "WHERE COURSES.id NOT IN (SELECT course_id FROM PARTICIPATIONS WHERE student_id=?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, studentId);
+
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String name = rs.getString("name");
+                    String description = rs.getString("description");
+                    int teacherId = rs.getInt("teacher_id");
+
+                    courseList.add(new Course(id, name, description, teacherId));
+                }
+            }
+
+        } catch (SQLException | NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        return courseList;
+    }
+
+    @Override
+    public List<Course> findRegistered(int studentId) {
+        List<Course> registeredCourses = new ArrayList<>();
+
+        String query = "SELECT COURSES.id, COURSES.name, COURSES.description, COURSES.teacher_id " +
+                "FROM COURSES, PARTICIPATIONS " +
+                "WHERE student_id=? AND COURSES.id = PARTICIPATIONS.course_id";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, studentId);
+
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String name = rs.getString("name");
+                    String description = rs.getString("description");
+                    int teacherId = rs.getInt("teacher_id");
+
+                    registeredCourses.add(new Course(id, name, description, teacherId));
+                }
+            }
+
+        } catch (SQLException | NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        return registeredCourses;
+    }
 }
