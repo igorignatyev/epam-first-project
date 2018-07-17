@@ -117,4 +117,27 @@ public class ParticipationDaoImpl implements ParticipationDao {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public List<Participation> findAllByStudentId(int studentId) {
+        List<Participation> participationList = new ArrayList<>();
+
+        String query = "SELECT id, student_id, course_id FROM PARTICIPATIONS WHERE student_id=?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, studentId);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    int courseId = rs.getInt("course_id");
+
+                    participationList.add(new Participation(id, studentId, courseId));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return participationList;
+    }
 }
