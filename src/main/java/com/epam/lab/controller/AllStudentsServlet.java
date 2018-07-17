@@ -39,6 +39,12 @@ public class AllStudentsServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
+        if ("deleteStudent".equals(action)) {
+            String[] options = req.getParameterValues("option");
+            for (String option: options) {
+                studentDao.delete(Integer.parseInt(option));
+            }
+        }
 
         resp.sendRedirect("/students");
     }

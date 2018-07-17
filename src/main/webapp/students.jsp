@@ -14,28 +14,38 @@
     <title>Title</title>
 </head>
 <body>
-    <div>
-        <table border="1">
-            <c:forEach items="${students}" var="student">
-                <tr>
-                    <td><a href="/one_student?id=${student.id}">${student.id}</a></td>
-                    <td>${student.firstName}</td>
-                    <td>${student.lastName}</td>
-                </tr>
-            </c:forEach>
-        </table>
+<div>
+    <c:if test="${empty students}">
+        <p>Students list is empty</p>
+    </c:if>
 
-        <form action="students?action=addStudent" method="post">
-            <br> id <br>
-            <input type="text" name="id"size="20px">
-            <br> First Name <br>
-            <input type="text" name="firstName"size="20px">
-            <br> Last Name <br>
-            <input type="text" name="lastName"size="20px">
-            <br>
-            <input type="submit" value="Add">
+    <c:if test="${not empty students}">
+        <form method="post">
+            <table border="1">
+                <c:forEach items="${students}" var="student">
+                    <tr>
+                        <td><input type="checkbox" name="option" value="${student.id}"><a
+                                href="/one_student?id=${student.id}">${student.id}</a></td>
+                        <td>${student.firstName}</td>
+                        <td>${student.lastName}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+            <button type="submit" formaction="students?action=deleteStudent">Delete</button>
         </form>
-    </div>
+    </c:if>
+
+    <form action="students?action=addStudent" method="post">
+        <br> id <br>
+        <input type="text" name="id" size="20px">
+        <br> First Name <br>
+        <input type="text" name="firstName" size="20px">
+        <br> Last Name <br>
+        <input type="text" name="lastName" size="20px">
+        <br>
+        <input type="submit" value="Add">
+    </form>
+</div>
 </body>
 </html>
 

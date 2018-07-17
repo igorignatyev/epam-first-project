@@ -36,8 +36,13 @@ public class AllTeachersServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
+        if ("deleteTeacher".equals(action)) {
+            String[] options = req.getParameterValues("option");
+            for (String option: options) {
+                teacherDao.delete(Integer.parseInt(option));
+            }
+        }
 
-//        req.getRequestDispatcher("/teachers.jsp").forward(req, resp);
         resp.sendRedirect("/teachers");
     }
 }
