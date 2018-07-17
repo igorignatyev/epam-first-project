@@ -117,4 +117,33 @@ public class StudentDaoImpl implements StudentDao {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public List<Student> findAllByCourseId(int courseId) {
+        List<Student> studentList = new ArrayList<>();
+
+        String query = "SELECT STUDENTS.id, STUDENTS.first_name, STUDENTS.last_name " +
+                "FROM STUDENTS, PARTICIPATIONS " +
+                "WHERE course_id=? AND STUDENTS.id = PARTICIPATIONS.student_id AND PARTICIPATIONS.id NOT IN (SELECT participation_id FROM REVIEWS)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, courseId);
+
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String firstName = rs.getString("first_name");
+                    String lastName = rs.getString("last_name");
+
+                    studentList.add(new Student(id, firstName, lastName));
+                }
+            }
+
+        } catch (SQLException | NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        return studentList;
+    }
 }
