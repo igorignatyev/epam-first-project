@@ -140,4 +140,27 @@ public class ParticipationDaoImpl implements ParticipationDao {
 
         return participationList;
     }
+
+    @Override
+    public Participation findByStudentIdAndCourseId(int studentId, int courseId) {
+        Participation participation = null;
+
+        String query = "SELECT id, student_id, course_id FROM PARTICIPATIONS WHERE student_id=? AND course_id=?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, studentId);
+            preparedStatement.setInt(2, courseId);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+
+                    participation = new Participation(id, studentId, courseId);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return participation;
+    }
 }

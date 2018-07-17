@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ParticipationDao extends GenericDao<Participation> {
     List<Participation> findAllByStudentId(int id);
+
+    Participation findByStudentIdAndCourseId(int studentId, int courseId);
 }

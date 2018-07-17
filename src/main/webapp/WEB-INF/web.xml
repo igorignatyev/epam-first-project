@@ -1,0 +1,153 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+
+    <display-name>Electives</display-name>
+    <description>
+        Web-app for managing elective courses records.
+    </description>
+
+    <!--//////////////////////////////////////////////////////////////////////////////-->
+    <!--ADMIN-->
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>com.epam.lab.controller.AdminServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!--TEACHERS-->
+    <!--All-->
+    <servlet>
+    <servlet-name>AllTeachersServlet</servlet-name>
+    <servlet-class>com.epam.lab.controller.AllTeachersServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+    <servlet-name>AllTeachersServlet</servlet-name>
+    <url-pattern>/teachers</url-pattern>
+    </servlet-mapping>
+
+    <!--One-->
+    <servlet>
+    <servlet-name>OneTeacherServlet</servlet-name>
+    <servlet-class>com.epam.lab.controller.OneTeacherServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+    <servlet-name>OneTeacherServlet</servlet-name>
+    <url-pattern>/one_teacher</url-pattern>
+    </servlet-mapping>
+
+    
+    <!--STUDENTS-->
+    <!--All-->
+    <servlet>
+        <servlet-name>AllStudentsServlet</servlet-name>
+        <servlet-class>com.epam.lab.controller.AllStudentsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AllStudentsServlet</servlet-name>
+        <url-pattern>/students</url-pattern>
+    </servlet-mapping>
+
+    <!--One-->
+    <servlet>
+        <servlet-name>OneStudentServlet</servlet-name>
+        <servlet-class>com.epam.lab.controller.OneStudentServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>OneStudentServlet</servlet-name>
+        <url-pattern>/one_student</url-pattern>
+    </servlet-mapping>
+
+
+    <!--COURSES-->
+    <!--All-->
+    <servlet>
+        <servlet-name>AllCoursesServlet</servlet-name>
+        <servlet-class>com.epam.lab.controller.AllCoursesServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AllCoursesServlet</servlet-name>
+        <url-pattern>/courses</url-pattern>
+    </servlet-mapping>
+
+    <!--One-->
+    <servlet>
+        <servlet-name>OneCourseServlet</servlet-name>
+        <servlet-class>com.epam.lab.controller.OneCourseServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>OneCourseServlet</servlet-name>
+        <url-pattern>/one_course</url-pattern>
+    </servlet-mapping>
+
+    <!--//////////////////////////////////////////////////////////////////////////////-->
+    <!--USER-->
+
+    <!--STUDENT PAGE-->
+    <servlet>
+        <servlet-name>StudentServlet</servlet-name>
+        <servlet-class>com.epam.lab.controller.StudentServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>StudentServlet</servlet-name>
+        <url-pattern>/student</url-pattern>
+    </servlet-mapping>
+
+
+    <!--COURSE PAGE-->
+    <servlet>
+        <servlet-name>CourseServlet</servlet-name>
+        <servlet-class>com.epam.lab.controller.CourseServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CourseServlet</servlet-name>
+        <url-pattern>/course</url-pattern>
+    </servlet-mapping>
+
+    <!--TEACHER PAGE-->
+
+    <servlet>
+        <servlet-name>TeacherServlet</servlet-name>
+        <servlet-class>com.epam.lab.controller.TeacherServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>TeacherServlet</servlet-name>
+        <url-pattern>/teacher</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>CourseForTeacherServlet</servlet-name>
+        <servlet-class>com.epam.lab.controller.CourseForTeacherServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>CourseForTeacherServlet</servlet-name>
+        <url-pattern>/course_for_teacher</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>StudentForTeacherServlet</servlet-name>
+        <servlet-class>com.epam.lab.controller.StudentForTeacherServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>StudentForTeacherServlet</servlet-name>
+        <url-pattern>/student_for_teacher</url-pattern>
+    </servlet-mapping>
+
+</web-app>
