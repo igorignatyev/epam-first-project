@@ -17,8 +17,8 @@
         <br> Last Name <br>
         <input type="text" name="lastName" value="${lastName}" size="20px">
         <br>
-        <button type="submit" formaction="teacher?id=${id}&action=editTeacher">Edit</button>
-        <button type="submit" formaction="teacher?id=${id}&action=deleteTeacher">Delete</button>
+        <button type="submit" formaction="one_teacher?id=${id}&action=editTeacher">Save</button>
+        <button type="submit" formaction="one_teacher?id=${id}&action=deleteTeacher">Delete</button>
     </form>
 </body>
 </html>

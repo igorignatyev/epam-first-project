@@ -33,7 +33,7 @@
 
 
     <br>
-    <button type="submit" formaction="one_course?id=${id}&action=editCourse">Edit</button>
+    <button type="submit" formaction="one_course?id=${id}&action=editCourse">Save</button>
     <button type="submit" formaction="one_course?id=${id}&action=deleteCourse">Delete</button>
 </form>
 </body>

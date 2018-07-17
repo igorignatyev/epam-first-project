@@ -44,6 +44,12 @@ public class AllCoursesServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
+        if ("deleteCourse".equals(action)) {
+            String[] options = req.getParameterValues("option");
+            for (String option: options) {
+                courseDao.delete(Integer.parseInt(option));
+            }
+        }
 
         resp.sendRedirect("/courses");
     }
