@@ -30,16 +30,8 @@ public class AllStudentsServlet extends HttpServlet {
         String action = req.getParameter("action");
 
         if ("addStudent".equals(action)) {
-            int newId;
             try {
-                List<Student> studentList = studentDao.findAll();
-                if (studentList.isEmpty()) {
-                    newId = 1;
-                } else {
-                    Student lastStudent = studentList.get(studentList.size() - 1);
-                    newId = lastStudent.getId() + 1;
-                }
-
+                int newId = getNewId();
                 String firstName = req.getParameter("firstName");
                 String lastName = req.getParameter("lastName");
 
@@ -50,11 +42,25 @@ public class AllStudentsServlet extends HttpServlet {
         }
         if ("deleteStudent".equals(action)) {
             String[] options = req.getParameterValues("option");
-            for (String option: options) {
+            for (String option : options) {
                 studentDao.delete(Integer.parseInt(option));
             }
         }
 
         resp.sendRedirect("/students");
+    }
+
+    private int getNewId() {
+        int newId;
+        List<Student> studentList = studentDao.findAll();
+
+        if (studentList.isEmpty()) {
+            newId = 1;
+        } else {
+            Student lastStudent = studentList.get(studentList.size() - 1);
+            newId = lastStudent.getId() + 1;
+        }
+
+        return newId;
     }
 }
