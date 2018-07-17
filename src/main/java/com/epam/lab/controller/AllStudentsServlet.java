@@ -2,6 +2,7 @@ package com.epam.lab.controller;
 
 import com.epam.lab.dao.GenericDao;
 import com.epam.lab.dao.StudentDaoImpl;
+import com.epam.lab.entity.Course;
 import com.epam.lab.entity.Student;
 
 import javax.servlet.ServletException;
@@ -30,22 +31,36 @@ public class AllStudentsServlet extends HttpServlet {
 
         if ("addStudent".equals(action)) {
             try {
-                int id = Integer.parseInt(req.getParameter("id"));
+                int newId = getNewId();
                 String firstName = req.getParameter("firstName");
                 String lastName = req.getParameter("lastName");
 
-                studentDao.create(new Student(id, firstName, lastName));
+                studentDao.create(new Student(newId, firstName, lastName));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
         if ("deleteStudent".equals(action)) {
             String[] options = req.getParameterValues("option");
-            for (String option: options) {
+            for (String option : options) {
                 studentDao.delete(Integer.parseInt(option));
             }
         }
 
         resp.sendRedirect("/students");
+    }
+
+    private int getNewId() {
+        int newId;
+        List<Student> studentList = studentDao.findAll();
+
+        if (studentList.isEmpty()) {
+            newId = 1;
+        } else {
+            Student lastStudent = studentList.get(studentList.size() - 1);
+            newId = lastStudent.getId() + 1;
+        }
+
+        return newId;
     }
 }

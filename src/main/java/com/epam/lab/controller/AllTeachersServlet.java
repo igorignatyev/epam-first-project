@@ -2,6 +2,7 @@ package com.epam.lab.controller;
 
 import com.epam.lab.dao.GenericDao;
 import com.epam.lab.dao.TeacherDaoImpl;
+import com.epam.lab.entity.Student;
 import com.epam.lab.entity.Teacher;
 
 import javax.servlet.ServletException;
@@ -27,10 +28,10 @@ public class AllTeachersServlet extends HttpServlet {
         String action = req.getParameter("action");
         if ("addTeacher".equals(action)) {
             try {
-                int id = Integer.parseInt(req.getParameter("id"));
+                int newId = getNewId();
                 String firstName = req.getParameter("firstName");
                 String lastName = req.getParameter("lastName");
-                teacherDao.create(new Teacher(id, firstName, lastName));
+                teacherDao.create(new Teacher(newId, firstName, lastName));
 
             } catch (NumberFormatException e) {
                 e.printStackTrace();
@@ -38,12 +39,26 @@ public class AllTeachersServlet extends HttpServlet {
         }
         if ("deleteTeacher".equals(action)) {
             String[] options = req.getParameterValues("option");
-            for (String option: options) {
+            for (String option : options) {
                 teacherDao.delete(Integer.parseInt(option));
             }
         }
 
         resp.sendRedirect("/teachers");
+    }
+
+    private int getNewId() {
+        int newId;
+        List<Teacher> teacherList = teacherDao.findAll();
+
+        if (teacherList.isEmpty()) {
+            newId = 1;
+        } else {
+            Teacher lastTeacher = teacherList.get(teacherList.size() - 1);
+            newId = lastTeacher.getId() + 1;
+        }
+
+        return newId;
     }
 }
 
