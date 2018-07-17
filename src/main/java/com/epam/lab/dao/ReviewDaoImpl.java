@@ -23,7 +23,7 @@ public class ReviewDaoImpl implements ReviewDao {
     @Override
     public List<Review> findAll() {
         List<Review> reviewList = new ArrayList<>();
-        String query = "SELECT * FROM REVIEWS";
+        String query = "SELECT id, feedback, mark, participation_id FROM REVIEWS";
         try (ResultSet rs = statement.executeQuery(query)) {
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -43,7 +43,7 @@ public class ReviewDaoImpl implements ReviewDao {
     @Override
     public Review find(int id) {
         Review review = null;
-        String query = "SELECT * FROM REVIEWS WHERE id=?";
+        String query = "SELECT id, feedback, mark, participation_id FROM REVIEWS WHERE id=?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, id);
             try (ResultSet rs = preparedStatement.executeQuery()) {
