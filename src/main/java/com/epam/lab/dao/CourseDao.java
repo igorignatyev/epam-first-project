@@ -8,4 +8,6 @@ public interface CourseDao extends GenericDao<Course>{
     List<Course> findAvailable(int studentId);
 
     List<Course> findRegistered(int studentId);
+
+    List<Course> findAllByTeacherId(int id);
 }
