@@ -2,17 +2,13 @@ package com.epam.lab.dao;
 
 import com.epam.lab.config.DatabaseConfig;
 import com.epam.lab.entity.Student;
+import lombok.extern.slf4j.Slf4j;
 
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Slf4j
 public class StudentDaoImpl implements StudentDao {
     private Connection connection;
     private Statement statement = null;
@@ -83,7 +79,7 @@ public class StudentDaoImpl implements StudentDao {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
@@ -101,7 +97,7 @@ public class StudentDaoImpl implements StudentDao {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
@@ -114,7 +110,7 @@ public class StudentDaoImpl implements StudentDao {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
@@ -141,7 +137,7 @@ public class StudentDaoImpl implements StudentDao {
             }
 
         } catch (SQLException | NullPointerException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         return studentList;

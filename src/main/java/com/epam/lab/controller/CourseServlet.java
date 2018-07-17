@@ -5,6 +5,8 @@ import com.epam.lab.entity.Course;
 import com.epam.lab.entity.Participation;
 import com.epam.lab.entity.Student;
 import com.epam.lab.entity.Teacher;
+import com.epam.lab.error.ErrorHandler;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 public class CourseServlet extends HttpServlet {
+
     private static final GenericDao<Course> courseDao = new CourseDaoImpl();
     private static final GenericDao<Teacher> teacherDao = new TeacherDaoImpl();
     private static final GenericDao<Participation> participationDao = new ParticipationDaoImpl();
@@ -28,14 +32,27 @@ public class CourseServlet extends HttpServlet {
             studentId = Integer.parseInt(req.getParameter("studentId"));
             courseId = Integer.parseInt(req.getParameter("courseId"));
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         Student student = studentDao.find(studentId);
+
+        if (student == null) {
+            ErrorHandler.error("Could not find a student", req, resp);
+        }
+
         Course course = courseDao.find(courseId);
+
+        if (course == null) {
+            ErrorHandler.error("Could not find a course", req, resp);
+        }
 
         int teacherId = course.getTeacherId();
         Teacher teacher = teacherDao.find(teacherId);
+
+        if (teacher == null) {
+            ErrorHandler.error("Could not find a teacher", req, resp);
+        }
 
         req.setAttribute("student", student);
         req.setAttribute("course", course);
@@ -44,7 +61,7 @@ public class CourseServlet extends HttpServlet {
         try {
             req.getRequestDispatcher("/course.jsp").forward(req, resp);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
@@ -58,7 +75,7 @@ public class CourseServlet extends HttpServlet {
             studentId = Integer.parseInt(req.getParameter("studentId"));
             courseId = Integer.parseInt(req.getParameter("courseId"));
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         String action = req.getParameter("action");
@@ -78,7 +95,7 @@ public class CourseServlet extends HttpServlet {
         try {
             resp.sendRedirect("/student?studentId=" + studentId);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 }

@@ -2,16 +2,15 @@ package com.epam.lab.dao;
 
 import com.epam.lab.config.DatabaseConfig;
 import com.epam.lab.entity.Course;
+import lombok.extern.slf4j.Slf4j;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class CourseDaoImpl implements CourseDao {
+
     private Connection connection;
     private Statement statement = null;
 
@@ -20,7 +19,7 @@ public class CourseDaoImpl implements CourseDao {
             connection = DatabaseConfig.getDBConnection();
             statement = connection.createStatement();
         } catch (SQLException | NullPointerException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
@@ -41,7 +40,7 @@ public class CourseDaoImpl implements CourseDao {
                 courseList.add(new Course(id, name, description, teacherId));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         return courseList;
@@ -68,7 +67,7 @@ public class CourseDaoImpl implements CourseDao {
             }
 
         } catch (SQLException | NullPointerException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         return course;
@@ -92,7 +91,7 @@ public class CourseDaoImpl implements CourseDao {
             preparedStatement.execute();
 
         } catch (SQLException | NullPointerException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
@@ -112,7 +111,7 @@ public class CourseDaoImpl implements CourseDao {
 
             preparedStatement.execute();
         } catch (SQLException | NullPointerException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
@@ -124,12 +123,12 @@ public class CourseDaoImpl implements CourseDao {
 
             preparedStatement.execute();
         } catch (SQLException | NullPointerException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
     @Override
-    public List<Course> findAvailable(int studentId) {
+    public List<Course> findAllAvailable(int studentId) {
         List<Course> courseList = new ArrayList<>();
 
         String query = "SELECT COURSES.id, COURSES.name, COURSES.description, COURSES.teacher_id " +
@@ -152,19 +151,20 @@ public class CourseDaoImpl implements CourseDao {
             }
 
         } catch (SQLException | NullPointerException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         return courseList;
     }
 
     @Override
-    public List<Course> findRegistered(int studentId) {
+    public List<Course> findAllRegistered(int studentId) {
         List<Course> registeredCourses = new ArrayList<>();
 
         String query = "SELECT COURSES.id, COURSES.name, COURSES.description, COURSES.teacher_id " +
                 "FROM COURSES, PARTICIPATIONS " +
-                "WHERE student_id=? AND COURSES.id = PARTICIPATIONS.course_id";
+                "WHERE student_id=? AND COURSES.id = PARTICIPATIONS.course_id AND " +
+                "PARTICIPATIONS.id NOT IN(SELECT participation_id FROM REVIEWS)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, studentId);
@@ -182,10 +182,41 @@ public class CourseDaoImpl implements CourseDao {
             }
 
         } catch (SQLException | NullPointerException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         return registeredCourses;
+    }
+
+    @Override
+    public List<Course> findAllCompleted(int studentId) {
+        List<Course> completedCourses = new ArrayList<>();
+
+        String query = "SELECT COURSES.id, COURSES.name, COURSES.description, COURSES.teacher_id " +
+                "FROM COURSES, PARTICIPATIONS " +
+                "WHERE student_id=? AND COURSES.id = PARTICIPATIONS.course_id AND " +
+                "PARTICIPATIONS.id IN(SELECT participation_id FROM REVIEWS)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, studentId);
+
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String name = rs.getString("name");
+                    String description = rs.getString("description");
+                    int teacherId = rs.getInt("teacher_id");
+
+                    completedCourses.add(new Course(id, name, description, teacherId));
+                }
+            }
+
+        } catch (SQLException | NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        return completedCourses;
     }
 
     @Override
@@ -206,7 +237,7 @@ public class CourseDaoImpl implements CourseDao {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         return courseList;

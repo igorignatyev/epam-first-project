@@ -2,8 +2,9 @@ package com.epam.lab.controller;
 
 import com.epam.lab.dao.GenericDao;
 import com.epam.lab.dao.StudentDaoImpl;
-import com.epam.lab.entity.Course;
 import com.epam.lab.entity.Student;
+import com.epam.lab.error.ErrorHandler;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,13 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 public class AllStudentsServlet extends HttpServlet {
+
     private GenericDao<Student> studentDao = new StudentDaoImpl();
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Student> studentList = studentDao.findAll();
+
+        if (studentList == null) {
+            ErrorHandler.error("Could not find any students", req, resp);
+        }
 
         req.setAttribute("students", studentList);
 
@@ -37,7 +44,7 @@ public class AllStudentsServlet extends HttpServlet {
 
                 studentDao.create(new Student(newId, firstName, lastName));
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
         if ("deleteStudent".equals(action)) {

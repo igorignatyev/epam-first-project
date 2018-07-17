@@ -5,6 +5,8 @@ import com.epam.lab.dao.GenericDao;
 import com.epam.lab.dao.TeacherDaoImpl;
 import com.epam.lab.entity.Course;
 import com.epam.lab.entity.Teacher;
+import com.epam.lab.error.ErrorHandler;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,14 +15,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 public class AllCoursesServlet extends HttpServlet {
+
     private static final GenericDao<Course> courseDao = new CourseDaoImpl();
     private static final GenericDao<Teacher> teacherDao = new TeacherDaoImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Course> courseList = courseDao.findAll();
+
+        if (courseList == null) {
+            ErrorHandler.error("Could not find any courses", req, resp);
+        }
+
         List<Teacher> teacherList = teacherDao.findAll();
+
+        if (teacherList == null) {
+            ErrorHandler.error("Could not find any teachers", req, resp);
+        }
 
         req.setAttribute("courses", courseList);
         req.setAttribute("teachers", teacherList);
@@ -41,7 +54,7 @@ public class AllCoursesServlet extends HttpServlet {
 
                 courseDao.create(new Course(newId, name, description, teacherId));
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
         if ("deleteCourse".equals(action)) {

@@ -2,11 +2,13 @@ package com.epam.lab.dao;
 
 import com.epam.lab.config.DatabaseConfig;
 import com.epam.lab.entity.Teacher;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class TeacherDaoImpl implements TeacherDao {
     private Connection connection;
     private Statement statement = null;
@@ -16,7 +18,7 @@ public class TeacherDaoImpl implements TeacherDao {
             connection = DatabaseConfig.getDBConnection();
             statement = connection.createStatement();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
@@ -31,7 +33,7 @@ public class TeacherDaoImpl implements TeacherDao {
                 teacherList.add(new Teacher(id, firstName, lastName));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         return teacherList;
@@ -50,7 +52,7 @@ public class TeacherDaoImpl implements TeacherDao {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
         return teacher;
     }
@@ -67,7 +69,7 @@ public class TeacherDaoImpl implements TeacherDao {
             preparedStatement.setString(3, lastName);
             preparedStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
@@ -82,7 +84,7 @@ public class TeacherDaoImpl implements TeacherDao {
             preparedStatement.setInt(3, id);
             preparedStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
@@ -92,7 +94,7 @@ public class TeacherDaoImpl implements TeacherDao {
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 

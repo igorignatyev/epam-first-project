@@ -5,6 +5,8 @@ import com.epam.lab.dao.GenericDao;
 import com.epam.lab.dao.TeacherDaoImpl;
 import com.epam.lab.entity.Course;
 import com.epam.lab.entity.Teacher;
+import com.epam.lab.error.ErrorHandler;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 public class OneCourseServlet extends HttpServlet {
+
     private static final GenericDao<Course> courseDao = new CourseDaoImpl();
     private static final GenericDao<Teacher> teacherDao = new TeacherDaoImpl();
 
@@ -24,11 +28,20 @@ public class OneCourseServlet extends HttpServlet {
         try {
             id = Integer.parseInt(req.getParameter("id"));
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         Course course = courseDao.find(id);
+
+        if (course == null) {
+            ErrorHandler.error("Could not find a course", req, resp);
+        }
+
         List<Teacher> teacherList = teacherDao.findAll();
+
+        if (teacherList == null) {
+            ErrorHandler.error("Could not find any teachers", req, resp);
+        }
 
         String name = course.getName();
         String description = course.getDescription();
@@ -43,7 +56,7 @@ public class OneCourseServlet extends HttpServlet {
         try {
             req.getRequestDispatcher("/one_course.jsp").forward(req, resp);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
     }
@@ -55,7 +68,7 @@ public class OneCourseServlet extends HttpServlet {
         try {
             id = Integer.parseInt(req.getParameter("id"));
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         String action = req.getParameter("action");
@@ -67,7 +80,7 @@ public class OneCourseServlet extends HttpServlet {
                 int teacherId = Integer.parseInt(req.getParameter("teacherId"));
                 courseDao.update(id, new Course(id, name, description, teacherId)); //teacherId
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
 
@@ -78,7 +91,7 @@ public class OneCourseServlet extends HttpServlet {
         try {
             resp.sendRedirect("/courses");
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
     }

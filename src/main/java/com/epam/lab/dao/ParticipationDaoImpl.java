@@ -2,17 +2,13 @@ package com.epam.lab.dao;
 
 import com.epam.lab.config.DatabaseConfig;
 import com.epam.lab.entity.Participation;
+import lombok.extern.slf4j.Slf4j;
 
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.PreparedStatement;
-
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class ParticipationDaoImpl implements ParticipationDao {
     private Statement statement = null;
     private Connection connection;
@@ -22,7 +18,7 @@ public class ParticipationDaoImpl implements ParticipationDao {
             connection = DatabaseConfig.getDBConnection();
             statement = connection.createStatement();
         } catch (SQLException | NullPointerException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
@@ -40,7 +36,7 @@ public class ParticipationDaoImpl implements ParticipationDao {
                 participationList.add(new Participation(id, studentId, courseId));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         return participationList;
@@ -62,7 +58,7 @@ public class ParticipationDaoImpl implements ParticipationDao {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         return participation;
@@ -83,7 +79,7 @@ public class ParticipationDaoImpl implements ParticipationDao {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
@@ -101,7 +97,7 @@ public class ParticipationDaoImpl implements ParticipationDao {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
@@ -114,7 +110,7 @@ public class ParticipationDaoImpl implements ParticipationDao {
 
             preparedStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
     }
 
@@ -135,7 +131,7 @@ public class ParticipationDaoImpl implements ParticipationDao {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         return participationList;
@@ -158,7 +154,7 @@ public class ParticipationDaoImpl implements ParticipationDao {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         return participation;
