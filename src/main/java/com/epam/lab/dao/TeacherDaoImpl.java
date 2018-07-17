@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeacherDaoImpl implements TeacherDao {
-    private final Connection connection = DatabaseConfig.getDBConnection();
+    private Connection connection;
     private Statement statement = null;
 
-    public TeacherDaoImpl() {
+    public TeacherDaoImpl(){
         try {
+            connection = DatabaseConfig.getDBConnection();
             connection.setAutoCommit(false);
             statement = connection.createStatement();
         } catch (SQLException e) {
