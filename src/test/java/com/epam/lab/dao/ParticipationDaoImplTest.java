@@ -1,13 +1,14 @@
 package com.epam.lab.dao;
 
 import com.epam.lab.entity.Participation;
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class ParticipationDaoImplTest {
@@ -24,7 +25,7 @@ class ParticipationDaoImplTest {
 
         List<Participation> expectedList = Collections.singletonList(new Participation(1, 1, 1));
 
-        Assert.assertEquals(actualList, expectedList);
+        assertEquals(actualList, expectedList);
     }
 
     @Test
@@ -33,7 +34,7 @@ class ParticipationDaoImplTest {
 
         Participation expectedParticipation = new Participation(1, 1, 1);
 
-        Assert.assertEquals(actualParticipation, expectedParticipation);
+        assertEquals(actualParticipation, expectedParticipation);
     }
 
     @Test
@@ -44,7 +45,7 @@ class ParticipationDaoImplTest {
         List<Participation> actualList = participationDao.findAll();
         List<Participation> expectedList = Arrays.asList(new Participation(1, 1, 1), new Participation(2, 2, 2));
 
-        Assert.assertEquals(actualList, expectedList);
+        assertEquals(actualList, expectedList);
     }
 
     @Test
@@ -55,7 +56,7 @@ class ParticipationDaoImplTest {
 
         List<Participation> expectedList = Collections.singletonList(new Participation(1, 3, 3));
 
-        Assert.assertEquals(actualList, expectedList);
+        assertEquals(actualList, expectedList);
     }
 
     @Test
@@ -64,7 +65,7 @@ class ParticipationDaoImplTest {
 
         List<Participation> actualList = participationDao.findAll();
 
-        Assert.assertEquals(actualList.isEmpty(), true);
+        assertEquals(actualList.isEmpty(), true);
     }
 
 }

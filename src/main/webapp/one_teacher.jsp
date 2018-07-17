@@ -11,14 +11,15 @@
     <title>Title</title>
 </head>
 <body>
-    <form method="post">
-        <br> First Name <br>
-        <input type="text" name="firstName" value="${firstName}" size="20px">
-        <br> Last Name <br>
-        <input type="text" name="lastName" value="${lastName}" size="20px">
-        <br>
-        <button type="submit" formaction="one_teacher?id=${id}&action=editTeacher">Save</button>
-        <button type="submit" formaction="one_teacher?id=${id}&action=deleteTeacher">Delete</button>
-    </form>
+<form method="post">
+    <br> First Name <br>
+    <input type="text" name="firstName" value="${firstName}" size="20px">
+    <br> Last Name <br>
+    <input type="text" name="lastName" value="${lastName}" size="20px">
+    <br>
+    <button type="submit" formaction="one_teacher?id=${id}&action=editTeacher">Save</button>
+    <button type="submit" formaction="one_teacher?id=${id}&action=deleteTeacher">Delete</button>
+</form>
 </body>
 </html>
+

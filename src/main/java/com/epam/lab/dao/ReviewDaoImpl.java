@@ -90,4 +90,30 @@ public class ReviewDaoImpl implements ReviewDao {
     public void delete(int id) {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Review findByStudentIdAndCourseId(int studentId, int courseId) {
+        Review review = null;
+
+        String query = "SELECT REVIEWS.id, REVIEWS.feedback, REVIEWS.mark, REVIEWS.participation_id FROM REVIEWS, PARTICIPATIONS WHERE student_id=? AND course_id=?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, studentId);
+            preparedStatement.setInt(2, courseId);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String feedback = rs.getString("feedback");
+                    int mark = rs.getInt("mark");
+                    int participationId = rs.getInt("participation_id");
+
+                    review = new Review(id, feedback, mark, participationId);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return review;
+    }
 }
