@@ -36,9 +36,7 @@
     </c:if>
 
     <form action="students?action=addStudent" method="post">
-        <br> id <br>
-        <input type="text" name="id" size="20px">
-        <br> First Name <br>
+        First Name <br>
         <input type="text" name="firstName" size="20px">
         <br> Last Name <br>
         <input type="text" name="lastName" size="20px">

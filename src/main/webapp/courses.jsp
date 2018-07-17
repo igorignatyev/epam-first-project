@@ -34,9 +34,7 @@
     </c:if>
 
     <form action="courses?action=addCourse" method="post">
-        <br> ID <br>
-        <input type="text" name="id" size="20px">
-        <br> Name <br>
+        Name <br>
         <input type="text" name="name" size="20px">
         <br> Description <br>
         <input type="text" name="description" size="20px">
