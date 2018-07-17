@@ -33,16 +33,8 @@ public class AllCoursesServlet extends HttpServlet {
         String action = req.getParameter("action");
 
         if ("addCourse".equals(action)) {
-            int newId;
             try {
-                List<Course> courseList = courseDao.findAll();
-                if (courseList.isEmpty()) {
-                    newId = 1;
-                } else {
-                    Course lastCouse = courseList.get(courseList.size() - 1);
-                    newId = lastCouse.getId() + 1;
-                }
-
+                int newId = getNewId();
                 String name = req.getParameter("name");
                 String description = req.getParameter("description");
                 int teacherId = Integer.parseInt(req.getParameter("teacherId"));
@@ -54,11 +46,25 @@ public class AllCoursesServlet extends HttpServlet {
         }
         if ("deleteCourse".equals(action)) {
             String[] options = req.getParameterValues("option");
-            for (String option: options) {
+            for (String option : options) {
                 courseDao.delete(Integer.parseInt(option));
             }
         }
 
         resp.sendRedirect("/courses");
+    }
+
+    private int getNewId() {
+        int newId;
+        List<Course> courseList = courseDao.findAll();
+
+        if (courseList.isEmpty()) {
+            newId = 1;
+        } else {
+            Course lastCourse = courseList.get(courseList.size() - 1);
+            newId = lastCourse.getId() + 1;
+        }
+
+        return newId;
     }
 }
