@@ -9,12 +9,17 @@ Students can register for any available course from their PC's.
 Teachers can manage list of students for courses they teach at, 
 leave marks for students and give them feedback.
 
-## Database Structure
+## Getting Started
 
-You can see database structure of a project at the following picture:  
-![db-scheme](/uploads/1e528f9229557374849189af6d27ca24/db-scheme.png)
+To deploy the project locally, follow these steps:
 
-## Capabilities and features
+1. Use `git clone` to clone this project from git repository
+2. Install [Tomcat Plugin](http://tomcat.apache.org/) to your IDE 
+3. Build the 'war exploded' artifact in Project Configurations
+
+The project will be available at `localhost:8080/`.
+
+## Capabilities and Features
 
 There are 3 different types of users in the system. 
 Each of them has a certain set of possible actions.
@@ -37,3 +42,18 @@ Particularly, he is able to:
     * create and delete student and teacher accounts;
     * see any table from the application database;
     * perform any action that student or teacher is capable of. 
+
+## Database Structure
+
+You can see database structure of a project at the following picture:  
+![db-scheme](/uploads/1e528f9229557374849189af6d27ca24/db-scheme.png)
+
+## Technology Stack
+* Java SE Development Kit 8
+* JavaServer Pages 2.5
+* JUnit 5.2.0
+* H2 Database 1.4.197
+* Maven 1.7
+* Tomcat 9.0.10
+* Bootstrap 3.3.7
+
