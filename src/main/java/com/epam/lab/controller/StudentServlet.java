@@ -79,7 +79,7 @@ public class StudentServlet extends HttpServlet {
 
         try {
             resp.sendRedirect("/student?studentId=" + studentId);
-        } catch (NumberFormatException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
