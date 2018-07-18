@@ -8,9 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Student: ${student.firstName} ${student.lastName}</title>
 </head>
 <body>
+<div style="margin-left: 10px">
+<jsp:include page="styles/style.jsp"/>
 <h1>${teacher.firstName} ${teacher.lastName}</h1>
 
 <h2>Student: ${student.firstName} ${student.lastName}</h2>
@@ -28,6 +30,6 @@
     <p><button type="submit" formaction="student_for_teacher?teacherId=${teacher.id}&studentId=${studentId}&courseId=${courseId}&action=send">Send</button> </p>
 </form>
 
-
+</div>
 </body>
 </html>

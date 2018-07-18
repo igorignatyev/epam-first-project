@@ -9,12 +9,13 @@
 <%@ page contentType="text/html;charset=UTF-8" session="true" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Welcome!</title>
 </head>
 <body>
- <h1>Welcome: ${name}</h1>
+<jsp:include page="styles/style.jsp"/>
 
-<div>
+<div style="margin-left: 10px">
+    <h1>Welcome: ${name}</h1>
     <ul>
         <li><a href="/teachers">teachers</a></li>
         <li><a href="/courses">courses</a></li>

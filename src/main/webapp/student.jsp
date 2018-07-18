@@ -9,9 +9,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Welcome, ${student.firstName} ${student.lastName}!</title>
 </head>
 <body>
+<jsp:include page="styles/style.jsp"/>
+<div style="margin-left: 10px">
 <h1>Welcome, ${student.firstName} ${student.lastName}</h1>
 
 Your courses:<br>
@@ -33,14 +35,23 @@ Your courses:<br>
 </c:if>
 
 <c:if test="${not empty courses}">
-    <table border="1">
+    <table class="table table-condensed" style="width:500px">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Course Name</th>
+            <th>Course Description</th>
+        </tr>
+        </thead>
+        <tbody>
         <c:forEach items="${courses}" var="course">
             <tr>
-                <td><a href="/course?studentId=${student.id}&courseId=${course.id}">${course.id}</a></td>
+                <th scope="row"><a href="/course?studentId=${student.id}&courseId=${course.id}">${course.id}</a></th>
                 <td>${course.name}</td>
                 <td>${course.description}</td>
             </tr>
         </c:forEach>
+        </tbody>
     </table>
 </c:if>
 
@@ -55,5 +66,6 @@ Your courses:<br>
     </c:forEach>
 </c:if>
 
+</div>
 </body>
 </html>

@@ -8,18 +8,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Edit Teacher</title>
 </head>
 <body>
+<jsp:include page="styles/style.jsp"/>
+<div style="margin-left: 10px">
+
 <form method="post">
     <br> First Name <br>
     <input type="text" name="firstName" value="${firstName}" size="20px">
     <br> Last Name <br>
     <input type="text" name="lastName" value="${lastName}" size="20px">
     <br>
-    <button type="submit" formaction="one_teacher?id=${id}&action=editTeacher">Save</button>
-    <button type="submit" formaction="one_teacher?id=${id}&action=deleteTeacher">Delete</button>
+    <button type="submit" style="margin-top:5px" formaction="one_teacher?id=${id}&action=editTeacher">Save</button>
+    <button type="submit" style="margin-top:5px" formaction="one_teacher?id=${id}&action=deleteTeacher">Delete</button>
 </form>
+</div>
 </body>
 </html>
 

@@ -9,32 +9,39 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Teachers</title>
+    <title>List of Teachers</title>
 </head>
 <body>
-<div>
+<jsp:include page="styles/style.jsp"/>
+<div style="margin-top: 20px; margin-left: 10px; width: 500px">
     <c:if test="${empty teachers}">
         <p>Teachers list is empty</p>
     </c:if>
 
     <c:if test="${not empty teachers}">
         <form method="post">
-            <table border="1">
+            <table class="table table-condensed" style="width:500px">
+                <thead>
                 <tr>
-                    <td>ID</td>
-                    <td>First Name</td>
-                    <td>Last Name</td>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
                 </tr>
-                <c:forEach items="${teachers}" var="teacher">
-                    <tr>
-                        <td><input type="checkbox" name="option" value="${teacher.id}"><a
-                                href="one_teacher?id=${teacher.id}">${teacher.id}</a></td>
-                        <td>${teacher.firstName}</td>
-                        <td>${teacher.lastName}</td>
-                    </tr>
-                </c:forEach>
+                </thead>
+                <tbody>
+                    <c:forEach items="${teachers}" var="teacher">
+                        <tr>
+                            <th scope="row"><input type="checkbox" name="option" value="${teacher.id}"><a
+                                    href="one_teacher?id=${teacher.id}">${teacher.id}</a></th>
+                            <td>${teacher.firstName}</td>
+                            <td>${teacher.lastName}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
             </table>
-            <button type="submit" formaction="teachers?action=deleteTeacher">Delete</button>
+            <button type="submit" formaction="teachers?action=deleteTeacher">
+                Delete
+            </button>
         </form>
     </c:if>
     <form method="post" action="teachers?action=addTeacher">
@@ -43,7 +50,7 @@
         <br> Last Name <br>
         <input type="text" name="lastName" size="20px">
         <br>
-        <input type="submit" value="Add">
+        <input type="submit" value="Add" style="margin-top: 5px">
     </form>
 </div>
 </body>
