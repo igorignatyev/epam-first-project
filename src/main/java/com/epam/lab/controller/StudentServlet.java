@@ -15,35 +15,34 @@ import java.util.List;
 public class StudentServlet extends HttpServlet {
     private static final GenericDao<Student> studentDao = new StudentDaoImpl();
     private static final CourseDao courseDao = new CourseDaoImpl();
-    private static final GenericDao<Participation> participationDao = new ParticipationDaoImpl();
+    private static final ParticipationDao participationDao = new ParticipationDaoImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Course> availableCourses;
 
-        int id = 0;
+        int studentId = 0;
 
         try {
-            id = Integer.parseInt(req.getParameter("studentId"));
+            studentId = Integer.parseInt(req.getParameter("studentId"));
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
 
-        List<Course> registeredCourses = courseDao.findAllRegistered(id);
+        Student student = studentDao.find(studentId);
+
+        List<Course> registeredCourses = courseDao.findAllRegistered(studentId);
 
         if (registeredCourses.isEmpty()) {
             availableCourses = courseDao.findAll();
         } else {
-            availableCourses = courseDao.findAllAvailable(id);
+            availableCourses = courseDao.findAllAvailable(studentId);
         }
 
-        List<Course> completedCourses = courseDao.findAllCompleted(id);
+        List<Course> completedCourses = courseDao.findAllCompleted(studentId);
 
         availableCourses.removeAll(completedCourses);
 
-        Student student = studentDao.find(id);
-
-        System.out.println("participationDao.findAll() " + participationDao.findAll());
 
         req.setAttribute("student", student);
         req.setAttribute("courses", availableCourses);
@@ -78,6 +77,10 @@ public class StudentServlet extends HttpServlet {
             }
         }
 
-        resp.sendRedirect("/student?studentId=" + studentId);
+        try {
+            resp.sendRedirect("/student?studentId=" + studentId);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
     }
 }

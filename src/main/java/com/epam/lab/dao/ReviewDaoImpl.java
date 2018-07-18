@@ -95,7 +95,9 @@ public class ReviewDaoImpl implements ReviewDao {
     public Review findByStudentIdAndCourseId(int studentId, int courseId) {
         Review review = null;
 
-        String query = "SELECT REVIEWS.id, REVIEWS.feedback, REVIEWS.mark, REVIEWS.participation_id FROM REVIEWS, PARTICIPATIONS WHERE student_id=? AND course_id=?";
+        String query = "SELECT REVIEWS.id, REVIEWS.feedback, REVIEWS.mark, REVIEWS.participation_id FROM REVIEWS, PARTICIPATIONS WHERE " +
+                "REVIEWS.participation_id = PARTICIPATIONS.id AND " +
+                "student_id=? AND course_id=?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, studentId);

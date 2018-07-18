@@ -51,7 +51,7 @@ Your courses:<br>
 
 <c:if test="${not empty completed_courses}">
     <c:forEach items="${completed_courses}" var="completed_course">
-        <li>${completed_course.name}, ${completed_course.description}</li>
+        <li><a href="/review?studentId=${student.id}&courseId=${completed_course.id}">${completed_course.name}</a></li>
     </c:forEach>
 </c:if>
 

@@ -106,7 +106,7 @@
         <url-pattern>/student</url-pattern>
     </servlet-mapping>
 
-
+    
     <!--COURSE PAGE-->
     <servlet>
         <servlet-name>CourseServlet</servlet-name>
@@ -148,6 +148,18 @@
     <servlet-mapping>
         <servlet-name>StudentForTeacherServlet</servlet-name>
         <url-pattern>/student_for_teacher</url-pattern>
+    </servlet-mapping>
+
+    <!--REVIEW PAGE-->
+    
+    <servlet>
+        <servlet-name>ReviewServlet</servlet-name>
+        <servlet-class>com.epam.lab.controller.ReviewServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>ReviewServlet</servlet-name>
+        <url-pattern>/review</url-pattern>
     </servlet-mapping>
 
 </web-app>

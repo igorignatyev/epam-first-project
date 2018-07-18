@@ -34,7 +34,6 @@ public class TeacherServlet extends HttpServlet {
         List<Course> teachersCoursesList = courseDao.findAllByTeacherId(id);
         req.setAttribute("teachersCourses", teachersCoursesList);
 
-
         req.getRequestDispatcher("/teacher.jsp?teacherId=" + id).forward(req, resp);
     }
 }
