@@ -1,9 +1,9 @@
 package com.epam.lab.controller;
 
-import com.epam.lab.dao.GenericDao;
-import com.epam.lab.dao.StudentDaoImpl;
 import com.epam.lab.entity.Student;
 import com.epam.lab.error.ErrorHandler;
+import com.epam.lab.service.StudentService;
+import com.epam.lab.service.StudentServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class OneStudentServlet extends HttpServlet {
-    private final GenericDao<Student> studentDao = new StudentDaoImpl();
+    private final StudentService studentService = new StudentServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,7 +24,7 @@ public class OneStudentServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        Student student = studentDao.find(id);
+        Student student = studentService.find(id);
 
         if (student == null) {
             ErrorHandler.error("Could not find a student", req, resp);
@@ -61,14 +61,14 @@ public class OneStudentServlet extends HttpServlet {
                 String firstName = req.getParameter("firstName");
                 String lastName = req.getParameter("lastName");
 
-                studentDao.update(id, new Student(firstName, lastName));
+                studentService.update(id, new Student(firstName, lastName));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
 
         if ("deleteStudent".equals(action)) {
-            studentDao.delete(id);
+            studentService.delete(id);
         }
 
         try {

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ReviewServlet extends HttpServlet {
-    private static final GenericDao<Course> courseDao = new CourseDaoImpl();
+    private static final CourseDao courseDao = new CourseDaoImpl();
     private static final ReviewDao reviewDao = new ReviewDaoImpl();
 
     @Override

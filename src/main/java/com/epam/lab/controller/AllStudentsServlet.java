@@ -1,10 +1,9 @@
 package com.epam.lab.controller;
 
-import com.epam.lab.dao.GenericDao;
-import com.epam.lab.dao.StudentDaoImpl;
-import com.epam.lab.entity.Course;
 import com.epam.lab.entity.Student;
 import com.epam.lab.error.ErrorHandler;
+import com.epam.lab.service.StudentService;
+import com.epam.lab.service.StudentServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,12 +13,12 @@ import java.io.IOException;
 import java.util.List;
 
 public class AllStudentsServlet extends HttpServlet {
-    private GenericDao<Student> studentDao = new StudentDaoImpl();
+    private StudentService studentService = new StudentServiceImpl();
 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Student> studentList = studentDao.findAll();
+        List<Student> studentList = studentService.findAll();
 
         if (studentList == null) {
             ErrorHandler.error("Could not find any students", req, resp);
@@ -40,7 +39,7 @@ public class AllStudentsServlet extends HttpServlet {
                 String firstName = req.getParameter("firstName");
                 String lastName = req.getParameter("lastName");
 
-                studentDao.create(new Student(newId, firstName, lastName));
+                studentService.create(new Student(newId, firstName, lastName));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -48,7 +47,7 @@ public class AllStudentsServlet extends HttpServlet {
         if ("deleteStudent".equals(action)) {
             String[] options = req.getParameterValues("option");
             for (String option : options) {
-                studentDao.delete(Integer.parseInt(option));
+                studentService.delete(Integer.parseInt(option));
             }
         }
 
@@ -57,7 +56,7 @@ public class AllStudentsServlet extends HttpServlet {
 
     private int getNewId() {
         int newId;
-        List<Student> studentList = studentDao.findAll();
+        List<Student> studentList = studentService.findAll();
 
         if (studentList.isEmpty()) {
             newId = 1;

@@ -1,11 +1,12 @@
 package com.epam.lab.controller;
 
-import com.epam.lab.dao.CourseDaoImpl;
-import com.epam.lab.dao.GenericDao;
-import com.epam.lab.dao.TeacherDaoImpl;
 import com.epam.lab.entity.Course;
 import com.epam.lab.entity.Teacher;
 import com.epam.lab.error.ErrorHandler;
+import com.epam.lab.service.CourseService;
+import com.epam.lab.service.CourseServiceImpl;
+import com.epam.lab.service.TeacherService;
+import com.epam.lab.service.TeacherServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,18 +16,18 @@ import java.io.IOException;
 import java.util.List;
 
 public class AllCoursesServlet extends HttpServlet {
-    private static final GenericDao<Course> courseDao = new CourseDaoImpl();
-    private static final GenericDao<Teacher> teacherDao = new TeacherDaoImpl();
+    private static final CourseService courseService = new CourseServiceImpl();
+    private static final TeacherService teacherService = new TeacherServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Course> courseList = courseDao.findAll();
+        List<Course> courseList = courseService.findAll();
 
         if (courseList == null) {
             ErrorHandler.error("Could not find any courses", req, resp);
         }
 
-        List<Teacher> teacherList = teacherDao.findAll();
+        List<Teacher> teacherList = teacherService.findAll();
 
         if (teacherList == null) {
             ErrorHandler.error("Could not find any teachers", req, resp);
@@ -49,7 +50,7 @@ public class AllCoursesServlet extends HttpServlet {
                 String description = req.getParameter("description");
                 int teacherId = Integer.parseInt(req.getParameter("teacherId"));
 
-                courseDao.create(new Course(newId, name, description, teacherId));
+                courseService.create(new Course(newId, name, description, teacherId));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -57,7 +58,7 @@ public class AllCoursesServlet extends HttpServlet {
         if ("deleteCourse".equals(action)) {
             String[] options = req.getParameterValues("option");
             for (String option : options) {
-                courseDao.delete(Integer.parseInt(option));
+                courseService.delete(Integer.parseInt(option));
             }
         }
 
@@ -66,7 +67,7 @@ public class AllCoursesServlet extends HttpServlet {
 
     private int getNewId() {
         int newId;
-        List<Course> courseList = courseDao.findAll();
+        List<Course> courseList = courseService.findAll();
 
         if (courseList.isEmpty()) {
             newId = 1;

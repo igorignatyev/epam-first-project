@@ -1,6 +1,6 @@
 package com.epam.lab.entity;
 
-public class Student extends Entity {
+public class Student {
     private int id;
     private String firstName;
     private String lastName;

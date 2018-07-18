@@ -1,10 +1,9 @@
 package com.epam.lab.controller;
 
-import com.epam.lab.dao.*;
 import com.epam.lab.entity.Course;
-import com.epam.lab.entity.Participation;
 import com.epam.lab.entity.Student;
 import com.epam.lab.error.ErrorHandler;
+import com.epam.lab.service.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,9 +13,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class StudentServlet extends HttpServlet {
-    private static final GenericDao<Student> studentDao = new StudentDaoImpl();
-    private static final CourseDao courseDao = new CourseDaoImpl();
-    private static final ParticipationDao participationDao = new ParticipationDaoImpl();
+    private static final StudentService studentService = new StudentServiceImpl();
+    private static final CourseService courseService = new CourseServiceImpl();
+    private static final ParticipationService participationService = new ParticipationServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,22 +29,22 @@ public class StudentServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        Student student = studentDao.find(studentId);
+        Student student = studentService.find(studentId);
 
         if (student == null) {
             ErrorHandler.error("Could not find a student", req, resp);
             return;
         }
 
-        List<Course> registeredCourses = courseDao.findAllRegistered(studentId);
+        List<Course> registeredCourses = courseService.findAllRegistered(studentId);
 
         if (registeredCourses.isEmpty()) {
-            availableCourses = courseDao.findAll();
+            availableCourses = courseService.findAll();
         } else {
-            availableCourses = courseDao.findAllAvailable(studentId);
+            availableCourses = courseService.findAllAvailable(studentId);
         }
 
-        List<Course> completedCourses = courseDao.findAllCompleted(studentId);
+        List<Course> completedCourses = courseService.findAllCompleted(studentId);
 
         availableCourses.removeAll(completedCourses);
 
@@ -78,7 +77,7 @@ public class StudentServlet extends HttpServlet {
             String[] options = req.getParameterValues("option");
             if (options != null) {
                 for (String option : options) {
-                    participationDao.delete(Integer.parseInt(option));
+                    participationService.delete(Integer.parseInt(option));
                 }
             }
         }

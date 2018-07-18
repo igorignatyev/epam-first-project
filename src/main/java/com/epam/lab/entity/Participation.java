@@ -1,6 +1,6 @@
 package com.epam.lab.entity;
 
-public class Participation extends Entity {
+public class Participation {
     private int id;
     private int studentId;
     private int courseId;

@@ -2,7 +2,7 @@ package com.epam.lab.entity;
 
 import java.util.Objects;
 
-public class Teacher extends Entity {
+public class Teacher {
     private int id;
     private String firstName;
     private String lastName;

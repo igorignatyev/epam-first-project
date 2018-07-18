@@ -1,11 +1,11 @@
 package com.epam.lab.controller;
 
-import com.epam.lab.dao.*;
 import com.epam.lab.entity.Course;
 import com.epam.lab.entity.Participation;
 import com.epam.lab.entity.Student;
 import com.epam.lab.entity.Teacher;
 import com.epam.lab.error.ErrorHandler;
+import com.epam.lab.service.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,10 +15,10 @@ import java.io.IOException;
 import java.util.List;
 
 public class CourseServlet extends HttpServlet {
-    private static final GenericDao<Course> courseDao = new CourseDaoImpl();
-    private static final GenericDao<Teacher> teacherDao = new TeacherDaoImpl();
-    private static final GenericDao<Participation> participationDao = new ParticipationDaoImpl();
-    private static final GenericDao<Student> studentDao = new StudentDaoImpl();
+    private static final CourseService courseService = new CourseServiceImpl();
+    private static final TeacherService teacherService = new TeacherServiceImpl();
+    private static final ParticipationService participationService = new ParticipationServiceImpl();
+    private static final StudentService studentService = new StudentServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,20 +32,20 @@ public class CourseServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        Student student = studentDao.find(studentId);
+        Student student = studentService.find(studentId);
 
         if (student == null) {
             ErrorHandler.error("Could not find a student", req, resp);
         }
 
-        Course course = courseDao.find(courseId);
+        Course course = courseService.find(courseId);
 
         if (course == null) {
             ErrorHandler.error("Could not find a course", req, resp);
         }
 
         int teacherId = course.getTeacherId();
-        Teacher teacher = teacherDao.find(teacherId);
+        Teacher teacher = teacherService.find(teacherId);
 
         if (teacher == null) {
             ErrorHandler.error("Could not find a teacher", req, resp);
@@ -78,7 +78,7 @@ public class CourseServlet extends HttpServlet {
         String action = req.getParameter("action");
 
         if ("register".equals(action)) {
-            List<Participation> participationList = participationDao.findAll();
+            List<Participation> participationList = participationService.findAll();
             if (participationList.isEmpty()) {
                 newId = 1;
             } else {
@@ -86,7 +86,7 @@ public class CourseServlet extends HttpServlet {
                 newId = lastParticipation.getId() + 1;
             }
 
-            participationDao.create(new Participation(newId, studentId, courseId));
+            participationService.create(new Participation(newId, studentId, courseId));
         }
 
         try {

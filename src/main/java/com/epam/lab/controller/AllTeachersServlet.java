@@ -1,10 +1,9 @@
 package com.epam.lab.controller;
 
-import com.epam.lab.dao.GenericDao;
-import com.epam.lab.dao.TeacherDaoImpl;
-import com.epam.lab.entity.Student;
 import com.epam.lab.entity.Teacher;
 import com.epam.lab.error.ErrorHandler;
+import com.epam.lab.service.TeacherService;
+import com.epam.lab.service.TeacherServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,12 +13,12 @@ import java.io.IOException;
 import java.util.List;
 
 public class AllTeachersServlet extends HttpServlet {
-    private static final GenericDao<Teacher> teacherDao = new TeacherDaoImpl();
+    private static final TeacherService teacherService = new TeacherServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        List<Teacher> teacherList = teacherDao.findAll();
+        List<Teacher> teacherList = teacherService.findAll();
 
         if (teacherList == null) {
             ErrorHandler.error("Could not find any teachers", req, resp);
@@ -37,7 +36,7 @@ public class AllTeachersServlet extends HttpServlet {
                 int newId = getNewId();
                 String firstName = req.getParameter("firstName");
                 String lastName = req.getParameter("lastName");
-                teacherDao.create(new Teacher(newId, firstName, lastName));
+                teacherService.create(new Teacher(newId, firstName, lastName));
 
             } catch (NumberFormatException e) {
                 e.printStackTrace();
@@ -46,7 +45,7 @@ public class AllTeachersServlet extends HttpServlet {
         if ("deleteTeacher".equals(action)) {
             String[] options = req.getParameterValues("option");
             for (String option : options) {
-                teacherDao.delete(Integer.parseInt(option));
+                teacherService.delete(Integer.parseInt(option));
             }
         }
 
@@ -55,7 +54,7 @@ public class AllTeachersServlet extends HttpServlet {
 
     private int getNewId() {
         int newId;
-        List<Teacher> teacherList = teacherDao.findAll();
+        List<Teacher> teacherList = teacherService.findAll();
 
         if (teacherList.isEmpty()) {
             newId = 1;

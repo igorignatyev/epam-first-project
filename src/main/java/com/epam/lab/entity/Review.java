@@ -1,6 +1,6 @@
 package com.epam.lab.entity;
 
-public class Review extends Entity {
+public class Review {
     private int id;
     private String feedback;
     private int mark;

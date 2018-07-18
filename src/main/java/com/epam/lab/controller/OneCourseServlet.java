@@ -1,11 +1,12 @@
 package com.epam.lab.controller;
 
-import com.epam.lab.dao.CourseDaoImpl;
-import com.epam.lab.dao.GenericDao;
-import com.epam.lab.dao.TeacherDaoImpl;
 import com.epam.lab.entity.Course;
 import com.epam.lab.entity.Teacher;
 import com.epam.lab.error.ErrorHandler;
+import com.epam.lab.service.CourseService;
+import com.epam.lab.service.CourseServiceImpl;
+import com.epam.lab.service.TeacherService;
+import com.epam.lab.service.TeacherServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,8 +16,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class OneCourseServlet extends HttpServlet {
-    private static final GenericDao<Course> courseDao = new CourseDaoImpl();
-    private static final GenericDao<Teacher> teacherDao = new TeacherDaoImpl();
+    private static final CourseService courseService = new CourseServiceImpl();
+    private static final TeacherService teacherService = new TeacherServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -28,13 +29,13 @@ public class OneCourseServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        Course course = courseDao.find(id);
+        Course course = courseService.find(id);
 
         if (course == null) {
             ErrorHandler.error("Could not find a course", req, resp);
         }
 
-        List<Teacher> teacherList = teacherDao.findAll();
+        List<Teacher> teacherList = teacherService.findAll();
 
         if (teacherList == null) {
             ErrorHandler.error("Could not find any teachers", req, resp);
@@ -75,14 +76,14 @@ public class OneCourseServlet extends HttpServlet {
                 String name = req.getParameter("name");
                 String description = req.getParameter("description");
                 int teacherId = Integer.parseInt(req.getParameter("teacherId"));
-                courseDao.update(id, new Course(id, name, description, teacherId)); //teacherId
+                courseService.update(id, new Course(id, name, description, teacherId)); //teacherId
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
 
         if ("deleteCourse".equals(action)) {
-            courseDao.delete(id);
+            courseService.delete(id);
         }
 
         try {
