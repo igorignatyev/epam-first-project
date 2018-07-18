@@ -1,9 +1,12 @@
 package com.epam.lab.controller;
 
-import com.epam.lab.dao.*;
 import com.epam.lab.entity.Course;
 import com.epam.lab.entity.Review;
 import com.epam.lab.error.ErrorHandler;
+import com.epam.lab.service.CourseService;
+import com.epam.lab.service.CourseServiceImpl;
+import com.epam.lab.service.ReviewService;
+import com.epam.lab.service.ReviewServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,8 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ReviewServlet extends HttpServlet {
-    private static final CourseDao courseDao = new CourseDaoImpl();
-    private static final ReviewDao reviewDao = new ReviewDaoImpl();
+    private static final CourseService courseService = new CourseServiceImpl();
+    private static final ReviewService reviewService = new ReviewServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -27,7 +30,7 @@ public class ReviewServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        Review review = reviewDao.findByStudentIdAndCourseId(studentId, courseId);
+        Review review = reviewService.findByStudentIdAndCourseId(studentId, courseId);
 
         if (review == null) {
             ErrorHandler.error("Could not find a review", req, resp);
@@ -35,7 +38,7 @@ public class ReviewServlet extends HttpServlet {
 
         req.setAttribute("review", review);
 
-        Course course = courseDao.find(courseId);
+        Course course = courseService.find(courseId);
 
         if (course == null) {
             ErrorHandler.error("Could not find a course", req, resp);
