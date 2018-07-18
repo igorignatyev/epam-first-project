@@ -6,6 +6,7 @@ import com.epam.lab.dao.GenericDao;
 import com.epam.lab.dao.TeacherDaoImpl;
 import com.epam.lab.entity.Course;
 import com.epam.lab.entity.Teacher;
+import com.epam.lab.error.ErrorHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,14 +32,7 @@ public class TeacherServlet extends HttpServlet {
         Teacher teacher = teacherDao.find(id);
 
         if (teacher == null) {
-            req.setAttribute("message", "Could not find a teacher");
-
-            try {
-                req.getRequestDispatcher("/error.jsp").forward(req, resp);
-                return;
-            } catch (Exception exc) {
-                exc.printStackTrace();
-            }
+            ErrorHandler.error("Could not find a teacher", req, resp);
         }
 
         req.setAttribute("teacher", teacher);
@@ -46,6 +40,10 @@ public class TeacherServlet extends HttpServlet {
         List<Course> teachersCoursesList = courseDao.findAllByTeacherId(id);
         req.setAttribute("teachersCourses", teachersCoursesList);
 
-        req.getRequestDispatcher("/teacher.jsp?teacherId=" + id).forward(req, resp);
+        try {
+            req.getRequestDispatcher("/teacher.jsp?teacherId=" + id).forward(req, resp);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        }
     }
 }
