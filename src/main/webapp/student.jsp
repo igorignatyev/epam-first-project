@@ -19,17 +19,15 @@ Your courses:<br>
     You have not register in any courses yet. Please, register now.
 </c:if>
 <c:if test="${not empty registered_courses}">
-    <%--${registered_courses}--%>
+    <form method="post">
     <c:forEach items="${registered_courses}" var="registered_course">
-        <%--<ul>--%>
-            <li>${registered_course.name}, ${registered_course.description}</li>
-        <%--</ul>--%>
+            <li><input type="checkbox" name="option" value="${registered_course.id}">${registered_course.name}, ${registered_course.description}</li>
     </c:forEach>
+        <button type="submit" formaction="student?studentId=${student.id}&action=deleteParticipation">Unregister</button>
+    </form>
 </c:if>
-<br>
-<br>
 
-Available courses:<br>
+<br>Available courses:<br>
 <c:if test="${empty courses}">
     No available courses. Please, try again later.
 </c:if>
@@ -44,6 +42,17 @@ Available courses:<br>
             </tr>
         </c:forEach>
     </table>
+</c:if>
+
+<br>Completed courses:<br>
+<c:if test="${empty completed_courses}">
+    No completed courses yet.
+</c:if>
+
+<c:if test="${not empty completed_courses}">
+    <c:forEach items="${completed_courses}" var="completed_course">
+        <li>${completed_course.name}, ${completed_course.description}</li>
+    </c:forEach>
 </c:if>
 
 </body>
