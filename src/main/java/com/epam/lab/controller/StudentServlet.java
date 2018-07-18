@@ -31,6 +31,17 @@ public class StudentServlet extends HttpServlet {
 
         Student student = studentDao.find(studentId);
 
+        if (student == null) {
+            req.setAttribute("message", "Can not find any student with this id");
+
+            try {
+                req.getRequestDispatcher("/error.jsp").forward(req, resp);
+                return;
+            } catch (Exception exc) {
+                exc.printStackTrace();
+            }
+        }
+
         List<Course> registeredCourses = courseDao.findAllRegistered(studentId);
 
         if (registeredCourses.isEmpty()) {
