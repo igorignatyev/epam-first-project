@@ -28,7 +28,30 @@ public class OneCourseServlet extends HttpServlet {
         }
 
         Course course = courseDao.find(id);
+
+        if (course == null) {
+            req.setAttribute("message", "Could not find a course");
+
+            try {
+                req.getRequestDispatcher("/error.jsp").forward(req, resp);
+                return;
+            } catch (Exception exc) {
+                exc.printStackTrace();
+            }
+        }
+
         List<Teacher> teacherList = teacherDao.findAll();
+
+        if (teacherList == null) {
+            req.setAttribute("message", "Could not find any teachers");
+
+            try {
+                req.getRequestDispatcher("/error.jsp").forward(req, resp);
+                return;
+            } catch (Exception exc) {
+                exc.printStackTrace();
+            }
+        }
 
         String name = course.getName();
         String description = course.getDescription();

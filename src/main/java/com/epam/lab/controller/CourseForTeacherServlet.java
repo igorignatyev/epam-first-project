@@ -31,12 +31,48 @@ public class CourseForTeacherServlet extends HttpServlet {
         }
 
         Course course = courseDao.find(courseId);
+
+        if (course == null) {
+            req.setAttribute("message", "Could not find a course");
+
+            try {
+                req.getRequestDispatcher("/error.jsp").forward(req, resp);
+                return;
+            } catch (Exception exc) {
+                exc.printStackTrace();
+            }
+        }
+
         req.setAttribute("course", course);
 
         List<Student> studentsInThisCourseList = studentDao.findAllByCourseId(courseId);
+
+        if (studentsInThisCourseList == null) {
+            req.setAttribute("message", "Could not find any students for this course");
+
+            try {
+                req.getRequestDispatcher("/error.jsp").forward(req, resp);
+                return;
+            } catch (Exception exc) {
+                exc.printStackTrace();
+            }
+        }
+
         req.setAttribute("students", studentsInThisCourseList);
 
         Teacher teacher = teacherDao.find(teacherId);
+
+        if (teacher == null) {
+            req.setAttribute("message", "Could not find a teacher");
+
+            try {
+                req.getRequestDispatcher("/error.jsp").forward(req, resp);
+                return;
+            } catch (Exception exc) {
+                exc.printStackTrace();
+            }
+        }
+
         req.setAttribute("teacher", teacher);
 
         try {

@@ -37,9 +37,33 @@ public class StudentForTeacherServlet extends HttpServlet {
         req.setAttribute("courseId", courseId);
 
         Student student = studentDao.find(studentId);
+
+        if (student == null) {
+            req.setAttribute("message", "Could not find a student");
+
+            try {
+                req.getRequestDispatcher("/error.jsp").forward(req, resp);
+                return;
+            } catch (Exception exc) {
+                exc.printStackTrace();
+            }
+        }
+
         req.setAttribute("student", student);
 
         Teacher teacher = teacherDao.find(teacherId);
+
+        if (teacher == null) {
+            req.setAttribute("message", "Could not find a teacher");
+
+            try {
+                req.getRequestDispatcher("/error.jsp").forward(req, resp);
+                return;
+            } catch (Exception exc) {
+                exc.printStackTrace();
+            }
+        }
+
         req.setAttribute("teacher", teacher);
 
         try {

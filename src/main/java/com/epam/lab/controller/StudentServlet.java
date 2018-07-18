@@ -32,7 +32,7 @@ public class StudentServlet extends HttpServlet {
         Student student = studentDao.find(studentId);
 
         if (student == null) {
-            req.setAttribute("message", "Can not find any student with this id");
+            req.setAttribute("message", "Could not find a student");
 
             try {
                 req.getRequestDispatcher("/error.jsp").forward(req, resp);

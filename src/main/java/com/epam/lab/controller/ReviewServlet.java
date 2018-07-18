@@ -27,9 +27,33 @@ public class ReviewServlet extends HttpServlet {
         }
 
         Review review = reviewDao.findByStudentIdAndCourseId(studentId, courseId);
+
+        if (review == null) {
+            req.setAttribute("message", "Could not find a review");
+
+            try {
+                req.getRequestDispatcher("/error.jsp").forward(req, resp);
+                return;
+            } catch (Exception exc) {
+                exc.printStackTrace();
+            }
+        }
+
         req.setAttribute("review", review);
 
         Course course = courseDao.find(courseId);
+
+        if (course == null) {
+            req.setAttribute("message", "Could not find a course");
+
+            try {
+                req.getRequestDispatcher("/error.jsp").forward(req, resp);
+                return;
+            } catch (Exception exc) {
+                exc.printStackTrace();
+            }
+        }
+
         req.setAttribute("course", course);
 
         try {

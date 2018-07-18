@@ -25,6 +25,17 @@ public class OneStudentServlet extends HttpServlet {
 
         Student student = studentDao.find(id);
 
+        if (student == null) {
+            req.setAttribute("message", "Could not find a student");
+
+            try {
+                req.getRequestDispatcher("/error.jsp").forward(req, resp);
+                return;
+            } catch (Exception exc) {
+                exc.printStackTrace();
+            }
+        }
+
         String firstName = student.getFirstName();
         String lastName = student.getLastName();
 
