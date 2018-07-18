@@ -129,7 +129,7 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public List<Course> findAvailable(int studentId) {
+    public List<Course> findAllAvailable(int studentId) {
         List<Course> courseList = new ArrayList<>();
 
         String query = "SELECT COURSES.id, COURSES.name, COURSES.description, COURSES.teacher_id " +
@@ -159,12 +159,13 @@ public class CourseDaoImpl implements CourseDao {
     }
 
     @Override
-    public List<Course> findRegistered(int studentId) {
+    public List<Course> findAllRegistered(int studentId) {
         List<Course> registeredCourses = new ArrayList<>();
 
         String query = "SELECT COURSES.id, COURSES.name, COURSES.description, COURSES.teacher_id " +
                 "FROM COURSES, PARTICIPATIONS " +
-                "WHERE student_id=? AND COURSES.id = PARTICIPATIONS.course_id";
+                "WHERE student_id=? AND COURSES.id = PARTICIPATIONS.course_id AND " +
+                "PARTICIPATIONS.id NOT IN(SELECT participation_id FROM REVIEWS)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, studentId);
@@ -186,6 +187,37 @@ public class CourseDaoImpl implements CourseDao {
         }
 
         return registeredCourses;
+    }
+
+    @Override
+    public List<Course> findAllCompleted(int studentId) {
+        List<Course> completedCourses = new ArrayList<>();
+
+        String query = "SELECT COURSES.id, COURSES.name, COURSES.description, COURSES.teacher_id " +
+                "FROM COURSES, PARTICIPATIONS " +
+                "WHERE student_id=? AND COURSES.id = PARTICIPATIONS.course_id AND " +
+                "PARTICIPATIONS.id IN(SELECT participation_id FROM REVIEWS)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, studentId);
+
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String name = rs.getString("name");
+                    String description = rs.getString("description");
+                    int teacherId = rs.getInt("teacher_id");
+
+                    completedCourses.add(new Course(id, name, description, teacherId));
+                }
+            }
+
+        } catch (SQLException | NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        return completedCourses;
     }
 
     @Override

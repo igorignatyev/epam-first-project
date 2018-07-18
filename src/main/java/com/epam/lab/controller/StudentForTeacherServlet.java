@@ -51,8 +51,7 @@ public class StudentForTeacherServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int id;
-        int newId = 0;
+        int newId;
         int studentId = 0;
         int courseId = 0;
         int teacherId = 0;
@@ -68,16 +67,10 @@ public class StudentForTeacherServlet extends HttpServlet {
         String action = req.getParameter("action");
 
         if ("send".equals(action)) {
+            newId = getNewId();
             String feedback = req.getParameter("feedback");
             Participation participation = participationDao.findByStudentIdAndCourseId(studentId, courseId);
             int participationId = participation.getId();
-
-            List<Review> reviewList = reviewDao.findAll();
-            if (!(reviewList.isEmpty())) {
-                id = reviewList.get(reviewList.size() - 1).getId();
-                newId = id + 1;
-            }
-
             int mark = Integer.parseInt(req.getParameter("mark"));
 
             reviewDao.create(new Review(newId, feedback, mark, participationId));
@@ -88,5 +81,19 @@ public class StudentForTeacherServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private int getNewId() {
+        int newId;
+        List<Review> reviewList = reviewDao.findAll();
+
+        if (reviewList.isEmpty()) {
+            newId = 1;
+        } else {
+            Review lastReview = reviewList.get(reviewList.size() - 1);
+            newId = lastReview.getId() + 1;
+        }
+
+        return newId;
     }
 }
