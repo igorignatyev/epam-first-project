@@ -3,6 +3,7 @@ package com.epam.lab.controller;
 import com.epam.lab.dao.*;
 import com.epam.lab.entity.Course;
 import com.epam.lab.entity.Review;
+import com.epam.lab.error.ErrorHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,9 +28,19 @@ public class ReviewServlet extends HttpServlet {
         }
 
         Review review = reviewDao.findByStudentIdAndCourseId(studentId, courseId);
+
+        if (review == null) {
+            ErrorHandler.error("Could not find a review", req, resp);
+        }
+
         req.setAttribute("review", review);
 
         Course course = courseDao.find(courseId);
+
+        if (course == null) {
+            ErrorHandler.error("Could not find a course", req, resp);
+        }
+
         req.setAttribute("course", course);
 
         try {

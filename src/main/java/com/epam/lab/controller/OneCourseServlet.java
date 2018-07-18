@@ -5,6 +5,7 @@ import com.epam.lab.dao.GenericDao;
 import com.epam.lab.dao.TeacherDaoImpl;
 import com.epam.lab.entity.Course;
 import com.epam.lab.entity.Teacher;
+import com.epam.lab.error.ErrorHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -28,7 +29,16 @@ public class OneCourseServlet extends HttpServlet {
         }
 
         Course course = courseDao.find(id);
+
+        if (course == null) {
+            ErrorHandler.error("Could not find a course", req, resp);
+        }
+
         List<Teacher> teacherList = teacherDao.findAll();
+
+        if (teacherList == null) {
+            ErrorHandler.error("Could not find any teachers", req, resp);
+        }
 
         String name = course.getName();
         String description = course.getDescription();

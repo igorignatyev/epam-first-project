@@ -5,6 +5,7 @@ import com.epam.lab.entity.Course;
 import com.epam.lab.entity.Review;
 import com.epam.lab.entity.Student;
 import com.epam.lab.entity.Teacher;
+import com.epam.lab.error.ErrorHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,12 +32,27 @@ public class CourseForTeacherServlet extends HttpServlet {
         }
 
         Course course = courseDao.find(courseId);
+
+        if (course == null) {
+            ErrorHandler.error("Could not find a course", req, resp);
+        }
+
         req.setAttribute("course", course);
 
         List<Student> studentsInThisCourseList = studentDao.findAllByCourseId(courseId);
+
+        if (studentsInThisCourseList == null) {
+            ErrorHandler.error("Could not find any students for this course", req, resp);
+        }
+
         req.setAttribute("students", studentsInThisCourseList);
 
         Teacher teacher = teacherDao.find(teacherId);
+
+        if (teacher == null) {
+            ErrorHandler.error("Could not find a teacher", req, resp);
+        }
+
         req.setAttribute("teacher", teacher);
 
         try {

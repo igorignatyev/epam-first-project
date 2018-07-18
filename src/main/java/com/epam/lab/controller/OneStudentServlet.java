@@ -3,6 +3,7 @@ package com.epam.lab.controller;
 import com.epam.lab.dao.GenericDao;
 import com.epam.lab.dao.StudentDaoImpl;
 import com.epam.lab.entity.Student;
+import com.epam.lab.error.ErrorHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +25,10 @@ public class OneStudentServlet extends HttpServlet {
         }
 
         Student student = studentDao.find(id);
+
+        if (student == null) {
+            ErrorHandler.error("Could not find a student", req, resp);
+        }
 
         String firstName = student.getFirstName();
         String lastName = student.getLastName();

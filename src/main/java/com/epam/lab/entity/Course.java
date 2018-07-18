@@ -1,6 +1,6 @@
 package com.epam.lab.entity;
 
-public class Course {
+public class Course extends Entity {
     private int id;
     private String name;
     private String description;

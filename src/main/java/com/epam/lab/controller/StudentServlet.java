@@ -4,6 +4,7 @@ import com.epam.lab.dao.*;
 import com.epam.lab.entity.Course;
 import com.epam.lab.entity.Participation;
 import com.epam.lab.entity.Student;
+import com.epam.lab.error.ErrorHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -32,14 +33,8 @@ public class StudentServlet extends HttpServlet {
         Student student = studentDao.find(studentId);
 
         if (student == null) {
-            req.setAttribute("message", "Can not find any student with this id");
-
-            try {
-                req.getRequestDispatcher("/error.jsp").forward(req, resp);
-                return;
-            } catch (Exception exc) {
-                exc.printStackTrace();
-            }
+            ErrorHandler.error("Could not find a student", req, resp);
+            return;
         }
 
         List<Course> registeredCourses = courseDao.findAllRegistered(studentId);
