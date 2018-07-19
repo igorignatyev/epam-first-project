@@ -60,6 +60,13 @@
         <input type="submit" value="Add" style="margin-top: 5px">
     </form>
 </div>
+
+<a href="/admin.jsp">Back</a>
+
+<form action="/logout" method="post">
+    <input type="submit" value="Logout" >
+</form>
+
 </body>
 </html>
 

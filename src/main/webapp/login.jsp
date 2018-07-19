@@ -16,36 +16,35 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.1.0/css/flag-icon.min.css"/>
 </head>
 <body>
-<h1><fmt:message bundle="${login}" key="login.title"/></h1>
+<%--<h1><fmt:message bundle="${login}" key="login.title"/></h1>--%>
+<h1>Login page</h1>
 
-<c:set var="currentUrl" value="${requestScope['javax.servlet.forward.request_uri']}?${pageContext.request.queryString}"/>
+<c:set var="currentUrl"
+       value="${requestScope['javax.servlet.forward.request_uri']}?${pageContext.request.queryString}"/>
 <c:url var="localUrl" value="/locale"/>
-<form action="${localUrl}" method="post">
-    <input type="hidden" name="redirect_to" value="${currentUrl}">
-    <input type="hidden" name="locale" value="en">
-    <button type="submit" class="flag-icon flag-icon-us" title="${enTitle}"></button>
+<%--<form action="${localUrl}" method="post">--%>
+<%--<input type="hidden" name="redirect_to" value="${currentUrl}">--%>
+<%--<input type="hidden" name="locale" value="en">--%>
+<%--<button type="submit" class="flag-icon flag-icon-us" title="${enTitle}"></button>--%>
 
-</form>
-<form action="${localUrl}" method="post">
-    <input type="hidden" name="redirect_to" value="${currentUrl}">
-    <input type="hidden" name="locale" value="ru">
-    <button type="submit" class="flag-icon flag-icon-ru" title="${ruTitle}"></button>
-</form>
+<%--</form>--%>
+<%--<form action="${localUrl}" method="post">--%>
+<%--<input type="hidden" name="redirect_to" value="${currentUrl}">--%>
+<%--<input type="hidden" name="locale" value="ru">--%>
+<%--<button type="submit" class="flag-icon flag-icon-ru" title="${ruTitle}"></button>--%>
+<%--</form>--%>
 
 <form method="post" action="login?action=login">
-    <br> <fmt:message bundle="${login}" key="login.email"/> <br>
+    <%--<br> <fmt:message bundle="${login}" key="login.email"/> <br>--%>
+    <br>Login<br>
     <input type="text" name="email" size="20px">
-    <br> <fmt:message bundle="${login}" key="login.password"/> <br>
+    <%--<br> <fmt:message bundle="${login}" key="login.password"/> <br>--%>
+    <br>Password<br>
     <input type="password" name="password" size="20px">
     <br>
-    <select name="locale">
-        <c:forEach items="${locales}" var="locale">
-            <option value="${locale}">
-                    ${locale}
-            </option>
-        </c:forEach>
+    <%--<select name="locale">--%>
     </select>
-    <input type="submit" value="Log In!">
+    <input type="submit" value="Sign in!">
 </form>
 
 <a href="/registration">Sign up</a>

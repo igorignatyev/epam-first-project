@@ -30,6 +30,11 @@
     <p><button type="submit" formaction="/teacher/student_for_teacher?teacherId=${teacher.id}&studentId=${studentId}&courseId=${courseId}&action=send">Send</button> </p>
 </form>
 
+    <a href="/teacher/course_for_teacher?teacherId=${teacher.id}&courseId=${courseId}">Back to students</a>
+
+    <form action="/logout" method="post">
+        <input type="submit" value="Logout" >
+    </form>
 </div>
 </body>
 </html>

@@ -15,6 +15,7 @@ import java.util.List;
 public class StudentServlet extends HttpServlet {
     private static final StudentDao studentDao = new StudentDaoImpl();
     private static final CourseDao courseDao = new CourseDaoImpl();
+    private static final ParticipationDao participationDao = new ParticipationDaoImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,11 +48,16 @@ public class StudentServlet extends HttpServlet {
                         availableCourses = courseDao.findAllAvailable(id);
                     }
 
+                    List<Course> completedCourses = courseDao.findAllCompleted(id);
+
+                    availableCourses.removeAll(completedCourses);
+
                     Student student = studentDao.find(id);
 
                     req.setAttribute("student", student);
                     req.setAttribute("courses", availableCourses);
                     req.setAttribute("registered_courses", registeredCourses);
+                    req.setAttribute("completed_courses", completedCourses);
 
                     try {
                         req.getRequestDispatcher("/student.jsp").forward(req, resp);
@@ -66,6 +72,34 @@ public class StudentServlet extends HttpServlet {
             }
         } else {
             accessDenied(resp);
+        }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int studentId = 0;
+
+        try {
+            studentId = Integer.parseInt(req.getParameter("studentId"));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        String action = req.getParameter("action");
+
+        if ("deleteParticipation".equals(action)) {
+            String[] options = req.getParameterValues("option");
+            if (options != null) {
+                for (String option : options) {
+                    participationDao.delete(Integer.parseInt(option));
+                }
+            }
+        }
+
+        try {
+            resp.sendRedirect("/student/student?studentId=" + studentId);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

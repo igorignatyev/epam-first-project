@@ -149,6 +149,17 @@
         <servlet-name>StudentForTeacherServlet</servlet-name>
         <url-pattern>/teacher/student_for_teacher</url-pattern>
     </servlet-mapping>
+    
+    <!--REVIEW-->
+    <servlet>
+        <servlet-name>ReviewServlet</servlet-name>
+        <servlet-class>com.epam.lab.controller.ReviewServlet</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>ReviewServlet</servlet-name>
+        <url-pattern>/student/review</url-pattern>
+    </servlet-mapping>
 
 
     <!--REGISTRATION-->

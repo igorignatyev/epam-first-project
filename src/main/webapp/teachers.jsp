@@ -13,6 +13,9 @@
 </head>
 <body>
 <jsp:include page="styles/style.jsp"/>
+
+<h1>Teachers</h1>
+
 <div style="margin-top: 20px; margin-left: 10px; width: 500px">
     <c:if test="${empty teachers}">
         <p>Teachers list is empty</p>
@@ -56,5 +59,12 @@
         <input type="submit" value="Add" style="margin-top: 5px">
     </form>
 </div>
+
+<a href="/admin.jsp">Back</a>
+
+<form action="/logout" method="post">
+    <input type="submit" value="Logout" >
+</form>
+
 </body>
 </html>

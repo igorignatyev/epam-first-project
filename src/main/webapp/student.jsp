@@ -25,7 +25,7 @@ Your courses:<br>
     <c:forEach items="${registered_courses}" var="registered_course">
             <li><input type="checkbox" name="option" value="${registered_course.id}">${registered_course.name}, ${registered_course.description}</li>
     </c:forEach>
-        <button type="submit" formaction="student?studentId=${student.id}&action=deleteParticipation">Unregister</button>
+        <button type="submit" formaction="/student/student?studentId=${student.id}&action=deleteParticipation">Unregister</button>
     </form>
 </c:if>
 
@@ -45,7 +45,7 @@ Your courses:<br>
         <tbody>
         <c:forEach items="${courses}" var="course">
             <tr>
-                <th scope="row"><a href="/course?studentId=${student.id}&courseId=${course.id}">${course.name}</a></th>
+                <th scope="row"><a href="/student/course?studentId=${student.id}&courseId=${course.id}">${course.name}</a></th>
                 <td>${course.description}</td>
             </tr>
         </c:forEach>
@@ -60,10 +60,15 @@ Your courses:<br>
 
 <c:if test="${not empty completed_courses}">
     <c:forEach items="${completed_courses}" var="completed_course">
-        <li><a href="/review?studentId=${student.id}&courseId=${completed_course.id}">${completed_course.name}</a></li>
+        <li><a href="/student/review?studentId=${student.id}&courseId=${completed_course.id}">${completed_course.name}</a></li>
     </c:forEach>
 </c:if>
 
 </div>
+
+<form action="/logout" method="post">
+    <input type="submit" value="Logout" >
+</form>
+
 </body>
 </html>

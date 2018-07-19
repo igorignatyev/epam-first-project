@@ -17,9 +17,16 @@
         <h1>${course.name}</h1>
         <h2>${course.description}</h2>
         <h3>Teacher: ${teacher.firstName} ${teacher.lastName}</h3>
-        <button type="submit" formaction="course?studentId=${student.id}&courseId=${course.id}&action=register">Register</button>
+        <button type="submit" formaction="/student/course?studentId=${student.id}&courseId=${course.id}&action=register">Register</button>
     </form>
 
     </div>
+
+<a href="/student/student?studentId=${student.id}">Back</a>
+
+<form action="/logout" method="post">
+    <input type="submit" value="Logout">
+</form>
+
 </body>
 </html>

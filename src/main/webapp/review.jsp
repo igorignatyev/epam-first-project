@@ -18,5 +18,11 @@ Feedback:<br>
 ${review.feedback}
 <br><br>Mark:<br>
 ${review.mark}
+
+
+<form action="/logout" method="post">
+    <input type="submit" value="Logout" >
+</form>
+
 </body>
 </html>

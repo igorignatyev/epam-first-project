@@ -15,7 +15,7 @@
 <jsp:include page="styles/style.jsp"/>
 
 <div style="margin-left: 10px">
-    <h1>Welcome: ${name}</h1>
+    <h1>Welcome, admin!</h1>
     <ul>
         <li><a href="/admin/teachers">teachers</a></li>
         <li><a href="/admin/courses">courses</a></li>

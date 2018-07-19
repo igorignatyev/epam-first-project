@@ -56,7 +56,7 @@ public class CourseForTeacherServlet extends HttpServlet {
         req.setAttribute("teacher", teacher);
 
         try {
-            req.getRequestDispatcher("course_for_teacher.jsp").forward(req, resp);
+            req.getRequestDispatcher("/course_for_teacher.jsp").forward(req, resp);
         } catch (Exception e) {
             e.printStackTrace();
         }

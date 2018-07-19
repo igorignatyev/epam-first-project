@@ -88,7 +88,7 @@ public class StudentForTeacherServlet extends HttpServlet {
         }
 
         try {
-            resp.sendRedirect("/course_for_teacher?teacherId=" + teacherId + "&" + "courseId=" + courseId);
+            resp.sendRedirect("/teacher/course_for_teacher?teacherId=" + teacherId + "&" + "courseId=" + courseId);
         } catch (Exception e) {
             e.printStackTrace();
         }

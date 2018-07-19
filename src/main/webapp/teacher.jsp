@@ -28,13 +28,17 @@
         </thead>
         <tbody>
         <tr>
-            <th scope="row"><a href="/course_for_teacher?teacherId=${teacher.id}&courseId=${teacherCourse.id}">${teacherCourse.name}</a></th>
+            <th scope="row"><a href="/teacher/course_for_teacher?teacherId=${teacher.id}&courseId=${teacherCourse.id}">${teacherCourse.name}</a></th>
             <td>${teacherCourse.description}</td>
         </tr>
         </tbody>
     </table>
 </c:forEach>
 </div>
+
+<form action="/logout" method="post">
+    <input type="submit" value="Logout" >
+</form>
 
 </body>
 </html>

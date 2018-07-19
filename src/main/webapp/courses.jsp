@@ -59,7 +59,21 @@
         <input type="submit" value="Add">
         <br>
     </form>
-
 </div>
+
+<form action="/admin.jsp" method="post">
+    <input type="submit" value="Back" >
+</form>
+
+<form action="/logout" method="post">
+    <input type="submit" value="Logout" >
+</form>
+
+<a href="/admin.jsp">Back</a>
+
+<form action="/logout" method="post">
+    <input type="submit" value="Logout" >
+</form>
+
 </body>
 </html>
