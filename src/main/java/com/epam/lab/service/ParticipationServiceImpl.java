@@ -41,6 +41,6 @@ public class ParticipationServiceImpl implements ParticipationService {
 
     @Override
     public Participation findByStudentIdAndCourseId(int studentId, int courseId) {
-        return findByStudentIdAndCourseId(studentId, courseId);
+        return participationDao.findByStudentIdAndCourseId(studentId, courseId);
     }
 }
