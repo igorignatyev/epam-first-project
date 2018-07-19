@@ -20,8 +20,10 @@
     <br> Last Name <br>
     <input type="text" name="lastName" value="${lastName}" size="20px">
     <br>
-    <button type="submit" style="margin-top:5px" formaction="one_teacher?id=${id}&action=editTeacher">Save</button>
-    <button type="submit" style="margin-top:5px" formaction="one_teacher?id=${id}&action=deleteTeacher">Delete</button>
+    <div style="margin-top: 5px">
+        <button type="submit" style="margin-top:5px" formaction="one_teacher?id=${id}&action=editTeacher">Save</button>
+        <button type="submit" style="margin-top:5px" formaction="one_teacher?id=${id}&action=deleteTeacher">Delete</button>
+    </div>
 </form>
 </div>
 </body>

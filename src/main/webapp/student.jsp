@@ -38,7 +38,6 @@ Your courses:<br>
     <table class="table table-condensed" style="width:500px">
         <thead>
         <tr>
-            <th>ID</th>
             <th>Course Name</th>
             <th>Course Description</th>
         </tr>
@@ -46,8 +45,7 @@ Your courses:<br>
         <tbody>
         <c:forEach items="${courses}" var="course">
             <tr>
-                <th scope="row"><a href="/course?studentId=${student.id}&courseId=${course.id}">${course.id}</a></th>
-                <td>${course.name}</td>
+                <th scope="row"><a href="/course?studentId=${student.id}&courseId=${course.id}">${course.name}</a></th>
                 <td>${course.description}</td>
             </tr>
         </c:forEach>

@@ -11,6 +11,7 @@
     <title>Title</title>
 </head>
 <body>
+<jsp:include page="styles/style.jsp"/>
 <h2>This is your review for course: ${course.name}</h2>
 
 Feedback:<br>

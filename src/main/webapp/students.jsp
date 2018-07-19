@@ -25,7 +25,7 @@
             <table class="table table-condensed" style="width:500px">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th></th>
                         <th>First Name</th>
                         <th>Last Name</th>
                     </tr>
@@ -33,9 +33,11 @@
                 <tbody>
                     <c:forEach items="${students}" var="student">
                         <tr>
-                            <th scope="row"><input type="checkbox" name="option" value="${student.id}"><a
-                                    href="/one_student?id=${student.id}">${student.id}</a></td>
-                            <td>${student.firstName}</td>
+
+                            <th scope="row"><input type="checkbox" name="option" value="${student.id}"></td>
+                            <a href="/one_student?id=${student.id}">
+                                <td>${student.firstName}</td>
+                            </a>
                             <td>${student.lastName}</td>
                         </tr>
                     </c:forEach>

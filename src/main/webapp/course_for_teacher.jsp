@@ -28,16 +28,14 @@
         <table class="table table-condensed" style="width:500px">
             <thead>
             <tr>
-                <th>ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <th scope="row"><a href="/student_for_teacher?teacherId=${teacher.id}&studentId=${student.id}&courseId=${course.id}">${student.id}</a>
+                <th scope="row"><a href="/student_for_teacher?teacherId=${teacher.id}&studentId=${student.id}&courseId=${course.id}">${student.firstName}</a>
                 </th>
-                <td>${student.firstName}</td>
                 <td>${student.lastName}</td>
             </tr>
             </tbody>
