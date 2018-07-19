@@ -22,15 +22,13 @@
     <table class="table table-condensed" style="width:500px" title="Students">
         <thead>
         <tr>
-            <th>ID</th>
             <th>Course Name</th>
             <th>Course Description</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <th scope="row"><a href="/course_for_teacher?teacherId=${teacher.id}&courseId=${teacherCourse.id}">${teacherCourse.id}</a></th>
-            <td>${teacherCourse.name}</td>
+            <th scope="row"><a href="/course_for_teacher?teacherId=${teacher.id}&courseId=${teacherCourse.id}">${teacherCourse.name}</a></th>
             <td>${teacherCourse.description}</td>
         </tr>
         </tbody>

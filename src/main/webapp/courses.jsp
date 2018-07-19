@@ -23,19 +23,16 @@
             <table class="table table-condensed" style="width:500px">
                 <thead>
                 <tr>
-                    <th>ID</th>
+                    <th></th>
                     <th>Course Name</th>
                     <th>Course Description</th>
-                    <th>Teacher ID</th>
                 </tr>
                 </thead>
                 <c:forEach items="${courses}" var="course">
                     <tr>
-                        <th scope="row"><input type="checkbox" name="option" value="${course.id}"><a
-                                href="/one_course?id=${course.id}">${course.id}</a></td>
-                        <td>${course.name}</td>
+                        <th scope="row"><input type="checkbox" name="option" value="${course.id}"></td>
+                        <td><a href="/one_course?id=${course.id}">${course.name}</a></td>
                         <td>${course.description}</td>
-                        <td>${course.teacherId}</td>
                     </tr>
                 </c:forEach>
             </table>
@@ -53,7 +50,7 @@
         <select name="teacherId">
             <c:forEach items="${teachers}" var="teacher">
                 <option value="${teacher.id}">
-                        ${teacher.firstName} ${teacher.lastName} with Id ${teacher.id}
+                        ${teacher.firstName} ${teacher.lastName}
                 </option>
             </c:forEach>
         </select>

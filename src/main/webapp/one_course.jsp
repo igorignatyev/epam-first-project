@@ -35,8 +35,10 @@
 
 
     <br>
-    <button type="submit" formaction="one_course?id=${id}&action=editCourse">Save</button>
-    <button type="submit" formaction="one_course?id=${id}&action=deleteCourse">Delete</button>
+    <div style="margin-top: 5px">
+        <button type="submit" formaction="one_course?id=${id}&action=editCourse">Save</button>
+        <button type="submit" formaction="one_course?id=${id}&action=deleteCourse">Delete</button>
+    </div>
 </form>
 </div>
 </body>
