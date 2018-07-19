@@ -11,25 +11,35 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>List of Students</title>
 </head>
 <body>
-<div>
+<jsp:include page="styles/style.jsp"/>
+<div style="margin-left: 10px;margin-top: 20px;width: 500px">
     <c:if test="${empty students}">
         <p>Students list is empty</p>
     </c:if>
 
     <c:if test="${not empty students}">
         <form method="post">
-            <table border="1">
-                <c:forEach items="${students}" var="student">
+            <table class="table table-condensed" style="width:500px">
+                <thead>
                     <tr>
-                        <td><input type="checkbox" name="option" value="${student.id}"><a
-                                href="/one_student?id=${student.id}">${student.id}</a></td>
-                        <td>${student.firstName}</td>
-                        <td>${student.lastName}</td>
+                        <th>ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
                     </tr>
-                </c:forEach>
+                </thead>
+                <tbody>
+                    <c:forEach items="${students}" var="student">
+                        <tr>
+                            <th scope="row"><input type="checkbox" name="option" value="${student.id}"><a
+                                    href="/one_student?id=${student.id}">${student.id}</a></td>
+                            <td>${student.firstName}</td>
+                            <td>${student.lastName}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
             </table>
             <button type="submit" formaction="students?action=deleteStudent">Delete</button>
         </form>
@@ -41,7 +51,7 @@
         <br> Last Name <br>
         <input type="text" name="lastName" size="20px">
         <br>
-        <input type="submit" value="Add">
+        <input type="submit" value="Add" style="margin-top: 5px">
     </form>
 </div>
 </body>

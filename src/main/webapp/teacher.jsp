@@ -9,22 +9,34 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Welcome, ${teacher.firstName} ${teacher.lastName}!</title>
 </head>
 <body>
+<jsp:include page="styles/style.jsp"/>
+
+<div style="margin-left: 10px">
 <h1>Welcome, ${teacher.firstName} ${teacher.lastName}</h1>
 
 
 <c:forEach items="${teachersCourses}" var="teacherCourse">
-    <table border="1" title="Students">
+    <table class="table table-condensed" style="width:500px" title="Students">
+        <thead>
         <tr>
-            <td><a href="/course_for_teacher?teacherId=${teacher.id}&courseId=${teacherCourse.id}">${teacherCourse.id}</a></td>
+            <th>ID</th>
+            <th>Course Name</th>
+            <th>Course Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row"><a href="/course_for_teacher?teacherId=${teacher.id}&courseId=${teacherCourse.id}">${teacherCourse.id}</a></th>
             <td>${teacherCourse.name}</td>
             <td>${teacherCourse.description}</td>
         </tr>
+        </tbody>
     </table>
 </c:forEach>
-
+</div>
 
 </body>
 </html>

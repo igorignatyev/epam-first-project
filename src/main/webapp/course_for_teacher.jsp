@@ -9,9 +9,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>${course.name}</title>
 </head>
 <body>
+<jsp:include page="styles/style.jsp"/>
+<div style="margin-left: 10px">
 <h1>${teacher.firstName} ${teacher.lastName}</h1>
 
 <h2>${course.name} Course</h2>
@@ -21,18 +23,29 @@
 </c:if>
 
 <c:if test="${not empty students}">
+    <p>Students registered for the course:</p>
     <c:forEach items="${students}" var="student">
-        <table border="1">
+        <table class="table table-condensed" style="width:500px">
+            <thead>
             <tr>
-                <td><a href="/student_for_teacher?teacherId=${teacher.id}&studentId=${student.id}&courseId=${course.id}">${student.id}</a>
-                </td>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row"><a href="/student_for_teacher?teacherId=${teacher.id}&studentId=${student.id}&courseId=${course.id}">${student.id}</a>
+                </th>
                 <td>${student.firstName}</td>
                 <td>${student.lastName}</td>
             </tr>
+            </tbody>
         </table>
     </c:forEach>
 </c:if>
 <br>
 <a href="/teacher?teacherId=${teacher.id}">Back to courses</a>
+</div>
 </body>
 </html>

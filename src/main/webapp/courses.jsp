@@ -8,20 +8,30 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>List of Courses</title>
 </head>
 <body>
-<div>
+<jsp:include page="styles/style.jsp"/>
+
+<div style="margin-left: 10px;margin-top: 20px;width: 500px">
     <c:if test="${empty courses}">
         <p>Courses list is empty</p>
     </c:if>
 
     <c:if test="${not empty courses}">
         <form method="post">
-            <table border="1">
+            <table class="table table-condensed" style="width:500px">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Course Name</th>
+                    <th>Course Description</th>
+                    <th>Teacher ID</th>
+                </tr>
+                </thead>
                 <c:forEach items="${courses}" var="course">
                     <tr>
-                        <td><input type="checkbox" name="option" value="${course.id}"><a
+                        <th scope="row"><input type="checkbox" name="option" value="${course.id}"><a
                                 href="/one_course?id=${course.id}">${course.id}</a></td>
                         <td>${course.name}</td>
                         <td>${course.description}</td>

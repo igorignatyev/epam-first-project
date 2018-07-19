@@ -11,9 +11,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Edit Course</title>
 </head>
 <body>
+<jsp:include page="styles/style.jsp"/>
+<div style="margin-left: 10px">
 <h1>Course</h1>
 
 <form method="post">
@@ -36,8 +38,8 @@
     <button type="submit" formaction="one_course?id=${id}&action=editCourse">Save</button>
     <button type="submit" formaction="one_course?id=${id}&action=deleteCourse">Delete</button>
 </form>
+</div>
 </body>
 
 </html>
 
-</html>
