@@ -28,7 +28,7 @@
     <select name="teacherId">
         <c:forEach items="${teachers}" var="teacher">
             <option value="${teacher.id}">
-                    ${teacher.firstName} ${teacher.lastName} with Id ${teacher.id}
+                    ${teacher.firstName} ${teacher.lastName}
             </option>
         </c:forEach>
     </select>

@@ -36,7 +36,7 @@
             <tr>
                 <th scope="row"><a href="/student_for_teacher?teacherId=${teacher.id}&studentId=${student.id}&courseId=${course.id}">${student.firstName}</a>
                 </th>
-                <td>${student.firstName}</td>
+                <td>${student.lastName}</td>
             </tr>
             </tbody>
         </table>
