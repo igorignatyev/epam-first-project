@@ -52,6 +52,10 @@
         <input type="text" name="firstName" size="20px">
         <br> Last Name <br>
         <input type="text" name="lastName" size="20px">
+        <br> Login <br>
+        <input type="text" name="login"size="20px">
+        <br> Password <br>
+        <input type="text" name="password"size="20px">
         <br>
         <input type="submit" value="Add" style="margin-top: 5px">
     </form>

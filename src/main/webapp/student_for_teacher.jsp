@@ -27,7 +27,7 @@
         <option value="3">3</option>
         <option value="2">2</option>
     </select>
-    <p><button type="submit" formaction="student_for_teacher?teacherId=${teacher.id}&studentId=${studentId}&courseId=${courseId}&action=send">Send</button> </p>
+    <p><button type="submit" formaction="/teacher/student_for_teacher?teacherId=${teacher.id}&studentId=${studentId}&courseId=${courseId}&action=send">Send</button> </p>
 </form>
 
 </div>

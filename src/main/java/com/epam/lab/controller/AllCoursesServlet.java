@@ -61,7 +61,7 @@ public class AllCoursesServlet extends HttpServlet {
             }
         }
 
-        resp.sendRedirect("/courses");
+        resp.sendRedirect("/admin/courses");
     }
 
     private int getNewId() {

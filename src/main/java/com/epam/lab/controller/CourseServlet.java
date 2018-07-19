@@ -90,7 +90,7 @@ public class CourseServlet extends HttpServlet {
         }
 
         try {
-            resp.sendRedirect("/student?studentId=" + studentId);
+            resp.sendRedirect("/student/student?studentId=" + studentId);
         } catch (Exception e) {
             e.printStackTrace();
         }

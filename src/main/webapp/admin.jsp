@@ -17,12 +17,15 @@
 <div style="margin-left: 10px">
     <h1>Welcome: ${name}</h1>
     <ul>
-        <li><a href="/teachers">teachers</a></li>
-        <li><a href="/courses">courses</a></li>
-        <li><a href="/students">students</a></li>
+        <li><a href="/admin/teachers">teachers</a></li>
+        <li><a href="/admin/courses">courses</a></li>
+        <li><a href="/admin/students">students</a></li>
     </ul>
 </div>
 
+ <form action="/logout" method="post">
+     <input type="submit" value="Logout" >
+ </form>
 
 </body>
 </html>

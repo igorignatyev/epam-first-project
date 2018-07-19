@@ -2,7 +2,6 @@ package com.epam.lab.controller;
 
 import com.epam.lab.dao.GenericDao;
 import com.epam.lab.dao.StudentDaoImpl;
-import com.epam.lab.entity.Course;
 import com.epam.lab.entity.Student;
 import com.epam.lab.error.ErrorHandler;
 
@@ -12,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+
+import static com.epam.lab.controller.auth.RegistrationServlet.hashPassword;
 
 public class AllStudentsServlet extends HttpServlet {
     private GenericDao<Student> studentDao = new StudentDaoImpl();
@@ -39,8 +40,10 @@ public class AllStudentsServlet extends HttpServlet {
                 int newId = getNewId();
                 String firstName = req.getParameter("firstName");
                 String lastName = req.getParameter("lastName");
+                String login = req.getParameter("login");
+                String password = req.getParameter("password");
 
-                studentDao.create(new Student(newId, firstName, lastName));
+                studentDao.create(new Student(newId, firstName, lastName, login, hashPassword(password)));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -52,7 +55,7 @@ public class AllStudentsServlet extends HttpServlet {
             }
         }
 
-        resp.sendRedirect("/students");
+        resp.sendRedirect("/admin/students");
     }
 
     private int getNewId() {

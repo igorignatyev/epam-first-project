@@ -86,7 +86,7 @@ public class OneCourseServlet extends HttpServlet {
         }
 
         try {
-            resp.sendRedirect("/courses");
+            resp.sendRedirect("/admin/courses");
         } catch (Exception e) {
             e.printStackTrace();
         }

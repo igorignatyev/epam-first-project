@@ -2,7 +2,6 @@ package com.epam.lab.controller;
 
 import com.epam.lab.dao.GenericDao;
 import com.epam.lab.dao.TeacherDaoImpl;
-import com.epam.lab.entity.Student;
 import com.epam.lab.entity.Teacher;
 import com.epam.lab.error.ErrorHandler;
 
@@ -12,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+
+import static com.epam.lab.controller.auth.RegistrationServlet.hashPassword;
 
 public class AllTeachersServlet extends HttpServlet {
     private static final GenericDao<Teacher> teacherDao = new TeacherDaoImpl();
@@ -32,12 +33,15 @@ public class AllTeachersServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String action = req.getParameter("action");
+
         if ("addTeacher".equals(action)) {
             try {
                 int newId = getNewId();
                 String firstName = req.getParameter("firstName");
                 String lastName = req.getParameter("lastName");
-                teacherDao.create(new Teacher(newId, firstName, lastName));
+                String login = req.getParameter("login");
+                String password = req.getParameter("password");
+                teacherDao.create(new Teacher(newId, firstName, lastName, login, hashPassword(password)));
 
             } catch (NumberFormatException e) {
                 e.printStackTrace();
@@ -50,7 +54,7 @@ public class AllTeachersServlet extends HttpServlet {
             }
         }
 
-        resp.sendRedirect("/teachers");
+        resp.sendRedirect("/admin/teachers");
     }
 
     private int getNewId() {

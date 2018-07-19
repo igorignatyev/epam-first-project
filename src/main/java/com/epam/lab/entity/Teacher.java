@@ -6,11 +6,36 @@ public class Teacher extends Entity {
     private int id;
     private String firstName;
     private String lastName;
+    private String login;
+    private String password;
 
-    public Teacher(int id, String firstName, String lastName) {
+    public Teacher(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Teacher(int id, String firstName, String lastName, String login, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.login = login;
+        this.password = password;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public int getId() {
@@ -41,15 +66,24 @@ public class Teacher extends Entity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Teacher teacher = (Teacher) o;
-        return getId() == teacher.getId() &&
-                Objects.equals(getFirstName(), teacher.getFirstName()) &&
-                Objects.equals(getLastName(), teacher.getLastName());
+
+        if (getId() != teacher.getId()) return false;
+        if (!getFirstName().equals(teacher.getFirstName())) return false;
+        if (!getLastName().equals(teacher.getLastName())) return false;
+        if (!getLogin().equals(teacher.getLogin())) return false;
+        return getPassword().equals(teacher.getPassword());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName());
+        int result = getId();
+        result = 31 * result + getFirstName().hashCode();
+        result = 31 * result + getLastName().hashCode();
+        result = 31 * result + getLogin().hashCode();
+        result = 31 * result + getPassword().hashCode();
+        return result;
     }
 
     public String toString() {

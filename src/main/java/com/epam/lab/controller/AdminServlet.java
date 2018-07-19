@@ -4,6 +4,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -13,7 +14,25 @@ public class AdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
-        req.getRequestDispatcher("/index.jsp").forward(req, resp);
+        HttpSession session = req.getSession(false);
+
+        System.out.println("session in AdminServlet " + session);
+
+        if (session != null) {
+            String role = (String) session.getAttribute("role");
+
+            System.out.println("role in AdminServlet " + role);
+
+            if ("admin".equals(role)) {
+                req.getRequestDispatcher("/admin.jsp").forward(req, resp);
+            } else {
+                accessDenied(resp);
+            }
+        }
+    }
+
+    private void accessDenied(HttpServletResponse resp) throws IOException {
+        resp.sendRedirect("login.jsp");
     }
 
     @Override
@@ -22,5 +41,7 @@ public class AdminServlet extends HttpServlet {
 
         super.doPost(req, resp);
     }
+
+
 }
 

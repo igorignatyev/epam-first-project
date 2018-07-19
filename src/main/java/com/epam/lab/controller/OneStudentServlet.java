@@ -72,7 +72,7 @@ public class OneStudentServlet extends HttpServlet {
         }
 
         try {
-            resp.sendRedirect("/students");
+            resp.sendRedirect("/admin/students");
         } catch (Exception e) {
             e.printStackTrace();
         }

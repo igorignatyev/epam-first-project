@@ -29,15 +29,17 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public List<Student> findAll() {
         List<Student> studentList = new ArrayList<>();
-        String query = "SELECT id, first_name, last_name FROM STUDENTS";
+        String query = "SELECT id, first_name, last_name, login, password FROM STUDENTS";
 
         try (ResultSet rs = statement.executeQuery(query)) {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String firstName = rs.getString("first_name");
                 String lastName = rs.getString("last_name");
+                String login = rs.getString("login");
+                String password = rs.getString("password");
 
-                studentList.add(new Student(id, firstName, lastName));
+                studentList.add(new Student(id, firstName, lastName, login, password));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -49,7 +51,7 @@ public class StudentDaoImpl implements StudentDao {
     @Override
     public Student find(int id) {
         Student student = null;
-        String query = "SELECT id, first_name, last_name FROM STUDENTS WHERE id=?";
+        String query = "SELECT id, first_name, last_name, login, password FROM STUDENTS WHERE id=?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, id);
@@ -57,8 +59,10 @@ public class StudentDaoImpl implements StudentDao {
                 while (rs.next()) {
                     String firstName = rs.getString("first_name");
                     String lastName = rs.getString("last_name");
+                    String login = rs.getString("login");
+                    String password = rs.getString("password");
 
-                    student = new Student(id, firstName, lastName);
+                    student = new Student(id, firstName, lastName, login, password);
                 }
             }
         } catch (SQLException e) {
@@ -73,13 +77,17 @@ public class StudentDaoImpl implements StudentDao {
         int id = student.getId();
         String firstName = student.getFirstName();
         String lastName = student.getLastName();
+        String login = student.getLogin();
+        String password = student.getPassword();
 
-        String query = "INSERT INTO STUDENTS (id, first_name, last_name) VALUES (?,?,?)";
+        String query = "INSERT INTO STUDENTS (id, first_name, last_name, login, password) VALUES (?,?,?,?,?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, id);
             preparedStatement.setString(2, firstName);
             preparedStatement.setString(3, lastName);
+            preparedStatement.setString(4, login);
+            preparedStatement.setString(5, password);
 
             preparedStatement.execute();
         } catch (SQLException e) {
@@ -122,7 +130,7 @@ public class StudentDaoImpl implements StudentDao {
     public List<Student> findAllByCourseId(int courseId) {
         List<Student> studentList = new ArrayList<>();
 
-        String query = "SELECT STUDENTS.id, STUDENTS.first_name, STUDENTS.last_name " +
+        String query = "SELECT STUDENTS.id, STUDENTS.first_name, STUDENTS.last_name, STUDENTS.login, STUDENTS.password " +
                 "FROM STUDENTS, PARTICIPATIONS " +
                 "WHERE course_id=? AND STUDENTS.id = PARTICIPATIONS.student_id AND PARTICIPATIONS.id NOT IN (SELECT participation_id FROM REVIEWS)";
 
@@ -135,8 +143,10 @@ public class StudentDaoImpl implements StudentDao {
                     int id = rs.getInt("id");
                     String firstName = rs.getString("first_name");
                     String lastName = rs.getString("last_name");
+                    String login = rs.getString("login");
+                    String password = rs.getString("password");
 
-                    studentList.add(new Student(id, firstName, lastName));
+                    studentList.add(new Student(id, firstName, lastName, login, password));
                 }
             }
 
@@ -145,5 +155,66 @@ public class StudentDaoImpl implements StudentDao {
         }
 
         return studentList;
+    }
+
+    @Override
+    public String getHashedPasswordByEmail(String email) {
+        String query = "SELECT password FROM STUDENTS WHERE login=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    return rs.getString("password");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Student findByParticipationId(int participationId) {
+        Student student = null;
+        String query = "SELECT STUDENTS.id, first_name, last_name, login, password FROM STUDENTS, PARTICIPATIONS WHERE " +
+                "PARTICIPATIONS.student_id = STUDENTS.id AND PARTICIPATIONS.id=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, participationId);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String firstName = rs.getString("first_name");
+                    String lastName = rs.getString("last_name");
+                    String login = rs.getString("login");
+                    String password = rs.getString("password");
+                    student = new Student(id, firstName, lastName, login, password);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return student;
+    }
+
+    @Override
+    public Student findByEmail(String email) {
+        Student student = null;
+        String query = "SELECT id, first_name, last_name, login, password FROM STUDENTS WHERE login=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String firstName = rs.getString("first_name");
+                    String lastName = rs.getString("last_name");
+                    String login = rs.getString("login");
+                    String password = rs.getString("password");
+                    student = new Student(id, firstName, lastName, login, password);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return student;
     }
 }

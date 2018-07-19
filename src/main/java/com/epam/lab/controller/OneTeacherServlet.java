@@ -44,7 +44,7 @@ public class OneTeacherServlet extends HttpServlet {
                 String firstName = req.getParameter("firstName");
                 String lastName = req.getParameter("lastName");
 
-                teacherDao.update(id, new Teacher(id, firstName, lastName));
+                teacherDao.update(id, new Teacher(firstName, lastName));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -54,7 +54,7 @@ public class OneTeacherServlet extends HttpServlet {
             teacherDao.delete(id);
         }
         try {
-            resp.sendRedirect("/teachers");
+            resp.sendRedirect("/admin/teachers");
         } catch (IOException e) {
             e.printStackTrace();
         }

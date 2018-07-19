@@ -36,13 +36,13 @@ public class DatabaseConfig {
 
             stmt.execute("CREATE TABLE REVIEWS(id INT PRIMARY KEY, feedback VARCHAR(255), mark INT, participation_id INT)");
 
-            stmt.execute("CREATE TABLE STUDENTS(id INT PRIMARY KEY, first_name VARCHAR(255), last_name VARCHAR(255))");
-            stmt.execute("INSERT INTO STUDENTS(id, first_name, last_name) VALUES (1, 'Andrew', 'Ivanov')");
-            stmt.execute("INSERT INTO STUDENTS(id, first_name, last_name) VALUES (2, 'Max', 'White')");
+            stmt.execute("CREATE TABLE STUDENTS(id INT PRIMARY KEY, first_name VARCHAR(255), last_name VARCHAR(255), login VARCHAR(255), password VARCHAR(255))");
+            stmt.execute("INSERT INTO STUDENTS(id, first_name, last_name, login, password) VALUES (1, 'Andrew', 'Ivanov', 'ivanov@login.com', '$2a$12$Jc8iGMcdypf7gu9d4FW7uuZawX/mtYY/91bG1qHMUf7vua7ValDZ.')");//11111
+            stmt.execute("INSERT INTO STUDENTS(id, first_name, last_name, login, password) VALUES (2, 'Max', 'White', 'white@login.com', '$2a$12$.frhgGZkCNr3zMZ56KQYuuOpGH.76oQLHpa4oHvXOHoMjTcUR/qnG')");//22222
 
-            stmt.execute("CREATE TABLE TEACHERS(id INT PRIMARY KEY, first_name VARCHAR(255), last_name VARCHAR(255))");
-            stmt.execute("INSERT INTO TEACHERS(id, first_name, last_name) VALUES (1, 'Roman', 'Fyodorov')");
-            stmt.execute("INSERT INTO TEACHERS(id, first_name, last_name) VALUES (2, 'Alex', 'White')");
+            stmt.execute("CREATE TABLE TEACHERS(id INT PRIMARY KEY, first_name VARCHAR(255), last_name VARCHAR(255), login VARCHAR(255), password VARCHAR(255))");
+            stmt.execute("INSERT INTO TEACHERS(id, first_name, last_name, login, password) VALUES (1, 'Roman', 'Fyodorov', 'fyodorov@login.com', '$2a$12$Jc8iGMcdypf7gu9d4FW7uuZawX/mtYY/91bG1qHMUf7vua7ValDZ.')");
+            stmt.execute("INSERT INTO TEACHERS(id, first_name, last_name, login, password) VALUES (2, 'Alex', 'White', 'white@login.com', '$2a$12$Jc8iGMcdypf7gu9d4FW7uuZawX/mtYY/91bG1qHMUf7vua7ValDZ.')");
             
             stmt.close();
             connection.commit();
