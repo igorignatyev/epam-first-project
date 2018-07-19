@@ -28,17 +28,15 @@
     <select name="teacherId">
         <c:forEach items="${teachers}" var="teacher">
             <option value="${teacher.id}">
-                    ${teacher.firstName} ${teacher.lastName}
+                    ${teacher.firstName} ${teacher.lastName} with Id ${teacher.id}
             </option>
         </c:forEach>
     </select>
 
 
     <br>
-    <div style="margin-top: 5px">
-        <button type="submit" formaction="one_course?id=${id}&action=editCourse">Save</button>
-        <button type="submit" formaction="one_course?id=${id}&action=deleteCourse">Delete</button>
-    </div>
+    <button type="submit" formaction="/admin/one_course?id=${id}&action=editCourse">Save</button>
+    <button type="submit" formaction="/admin/one_course?id=${id}&action=deleteCourse">Delete</button>
 </form>
 </div>
 </body>

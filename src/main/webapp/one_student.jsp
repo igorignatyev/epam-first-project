@@ -20,11 +20,13 @@
     <input type="text" name="firstName" value="${firstName}" size="20px">
     <br> Last Name <br>
     <input type="text" name="lastName" value="${lastName}" size="20px">
+    <br> Login <br>
+    <input type="text" name="login" value="${login}" size="20px">
+    <br> Password <br>
+    <input type="text" name="password" value="${password}" size="20px">
     <br>
-    <div style="margin-top: 5px">
-        <button type="submit" formaction="one_student?id=${id}&action=editStudent">Save</button>
-        <button type="submit" formaction="one_student?id=${id}&action=deleteStudent">Delete</button>
-    </div>
+    <button type="submit" formaction="/admin/one_student?id=${id}&action=editStudent">Save</button>
+    <button type="submit" formaction="/admin/one_student?id=${id}&action=deleteStudent">Delete</button>
 </form>
 </div>
 </body>
