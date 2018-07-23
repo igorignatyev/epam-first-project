@@ -25,8 +25,10 @@
     <br> Password <br>
     <input type="text" name="password" value="${password}" size="20px">
     <br>
+    <div style="margin-top: 5px">
     <button type="submit" formaction="/admin/one_student?id=${id}&action=editStudent">Save</button>
     <button type="submit" formaction="/admin/one_student?id=${id}&action=deleteStudent">Delete</button>
+    </div>
 </form>
 </div>
 </body>

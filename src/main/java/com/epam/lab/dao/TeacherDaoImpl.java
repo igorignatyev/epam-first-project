@@ -96,4 +96,41 @@ public class TeacherDaoImpl implements TeacherDao {
         }
     }
 
+    @Override
+    public Teacher findByEmail(String email) {
+        Teacher teacher = null;
+        String query = "SELECT id, first_name, last_name, login, password FROM TEACHERS WHERE login=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    String firstName = rs.getString("first_name");
+                    String lastName = rs.getString("last_name");
+                    String login = rs.getString("login");
+                    String password = rs.getString("password");
+                    teacher = new Teacher(id, firstName, lastName, login, password);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return teacher;
+    }
+
+    @Override
+    public String getHashedPasswordByEmail(String email) {
+        String query = "SELECT password FROM TEACHERS WHERE login=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                while (rs.next()) {
+                    return rs.getString("password");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

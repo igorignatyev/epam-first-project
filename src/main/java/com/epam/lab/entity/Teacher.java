@@ -1,7 +1,5 @@
 package com.epam.lab.entity;
 
-import java.util.Objects;
-
 public class Teacher extends Entity {
     private int id;
     private String firstName;
@@ -10,6 +8,12 @@ public class Teacher extends Entity {
     private String password;
 
     public Teacher(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Teacher(int id, String firstName, String lastName) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
